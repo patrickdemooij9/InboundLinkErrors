@@ -1,0 +1,10 @@
+{
+	javascript: [
+		'~/App_Plugins/LinkErrors/assets/scripts/app.js',
+		'~/App_Plugins/LinkErrors/assets/scripts/vendors.min.js'
+	],
+	css: [
+		'~/App_Plugins/LinkErrors/assets/styles/styles.min.css',
+		'~/App_Plugins/LinkErrors/assets/styles/vendors.min.css'
+	]
+}
