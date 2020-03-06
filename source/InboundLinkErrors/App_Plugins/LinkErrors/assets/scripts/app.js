@@ -14,7 +14,6 @@ angular.module("umbraco").controller("LinkErrorsController", function ($scope, $
     $scope.refreshTable = function () {
         if (!$scope.tableParams) return;
 
-        //$scope.tableParams.total($scope.linkErrors.length);
         $scope.tableParams.reload();
     }
 
