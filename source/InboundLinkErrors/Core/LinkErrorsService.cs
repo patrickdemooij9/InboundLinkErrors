@@ -9,10 +9,10 @@ namespace InboundLinkErrors.Core
     public class LinkErrorsService
     {
         private readonly LinkErrorsRepository _linkErrorsRepository;
-        private readonly IRedirectService _redirectService;
+        private readonly IRedirectAdapter _redirectService;
         private readonly UmbracoMapper _umbracoMapper;
 
-        public LinkErrorsService(LinkErrorsRepository linkErrorsRepository, UmbracoMapper umbracoMapper, IRedirectService redirectService)
+        public LinkErrorsService(LinkErrorsRepository linkErrorsRepository, UmbracoMapper umbracoMapper, IRedirectAdapter redirectService)
         {
             _linkErrorsRepository = linkErrorsRepository;
             _redirectService = redirectService;

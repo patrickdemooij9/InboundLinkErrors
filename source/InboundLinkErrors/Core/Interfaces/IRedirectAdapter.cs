@@ -1,6 +1,6 @@
 namespace InboundLinkErrors.Core.Interfaces
 {
-    public interface IRedirectService
+    public interface IRedirectAdapter
     {
         void AddRedirect(string fromUrl, string toUrl);
     }

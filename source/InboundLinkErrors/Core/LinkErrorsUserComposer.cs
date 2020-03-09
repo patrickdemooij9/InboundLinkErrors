@@ -19,7 +19,7 @@ namespace InboundLinkErrors.Core
             composition.Register<LinkErrorsRepository>(Lifetime.Request);
             composition.Register<LinkErrorsService>(Lifetime.Request);
             composition.Register<LinkErrorsInjectedModule>(Lifetime.Request);
-            composition.Register<IRedirectService, UmbracoRedirectAdapter>(Lifetime.Request);
+            composition.Register<IRedirectAdapter, UmbracoRedirectAdapter>(Lifetime.Request);
         }
     }
 }

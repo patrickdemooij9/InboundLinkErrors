@@ -5,7 +5,7 @@ using Umbraco.Web;
 
 namespace InboundLinkErrors.Core
 {
-    public class UmbracoRedirectAdapter : IRedirectService
+    public class UmbracoRedirectAdapter : IRedirectAdapter
     {
         private readonly IUmbracoContextFactory _contextFactory;
         private readonly IRedirectUrlService _redirectUrlService;

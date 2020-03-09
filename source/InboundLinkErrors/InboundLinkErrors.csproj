@@ -6,6 +6,10 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Authors>Patrick</Authors>
         <Description>Umbraco dashboard for tracking and showing inbound link errors</Description>
+        <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/patrickdemooij9/InboundLinkErrors</PackageProjectUrl>
+        <Version>1.0.1</Version>
+        <Product>InboundLinkErrors</Product>
     </PropertyGroup>
 
     <ItemGroup>
