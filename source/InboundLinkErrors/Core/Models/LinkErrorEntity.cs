@@ -27,5 +27,8 @@ namespace InboundLinkErrors.Core.Models
 
         [Column("LastTimeAccessed")]
         public DateTime LastAccessedTime { get; set; }
+
+        [ResultColumn]
+        public string LatestReferrer { get; set; }
     }
 }

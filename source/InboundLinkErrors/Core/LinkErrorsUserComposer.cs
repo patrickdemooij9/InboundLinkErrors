@@ -1,5 +1,7 @@
 using InboundLinkErrors.Core.Components;
 using InboundLinkErrors.Core.Interfaces;
+using InboundLinkErrors.Core.Repositories;
+using InboundLinkErrors.Core.Services;
 using Umbraco.Core;
 using Umbraco.Core.Composing;
 using Umbraco.Core.Mapping;

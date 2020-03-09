@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Web.Http;
 using InboundLinkErrors.Core.Models;
+using InboundLinkErrors.Core.Services;
 using Umbraco.Web.Mvc;
 using Umbraco.Web.WebApi;
 

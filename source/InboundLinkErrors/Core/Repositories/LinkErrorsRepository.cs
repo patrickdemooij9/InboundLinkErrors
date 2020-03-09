@@ -4,7 +4,7 @@ using Umbraco.Core.Logging;
 using Umbraco.Core.Persistence;
 using Umbraco.Core.Scoping;
 
-namespace InboundLinkErrors.Core
+namespace InboundLinkErrors.Core.Repositories
 {
     public class LinkErrorsRepository
     {

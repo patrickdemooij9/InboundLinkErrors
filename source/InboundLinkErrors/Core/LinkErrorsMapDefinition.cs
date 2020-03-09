@@ -29,6 +29,26 @@ namespace InboundLinkErrors.Core
                     target.TimesAccessed = source.TimesAccessed;
                     target.LastAccessedTime = source.LastAccessedTime;
                 });
+
+            mapper.Define<LinkErrorReferrerEntity, LinkErrorReferrerDto>(
+                (source, context) => new LinkErrorReferrerDto(),
+                (source, target, context) =>
+                {
+                    target.Id = source.Id;
+                    target.LinkErrorId = source.LinkErrorId;
+                    target.Referrer = source.Referrer;
+                    target.VisitCount = source.VisitCount;
+                });
+
+            mapper.Define<LinkErrorReferrerDto, LinkErrorReferrerEntity>(
+                (source, context) => new LinkErrorReferrerEntity(),
+                (source, target, context) =>
+                {
+                    target.Id = source.Id;
+                    target.LinkErrorId = source.LinkErrorId;
+                    target.Referrer = source.Referrer;
+                    target.VisitCount = source.VisitCount;
+                });
         }
     }
 }

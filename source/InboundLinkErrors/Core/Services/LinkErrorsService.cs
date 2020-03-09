@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using InboundLinkErrors.Core.Interfaces;
 using InboundLinkErrors.Core.Models;
+using InboundLinkErrors.Core.Repositories;
 using Umbraco.Core.Mapping;
 
-namespace InboundLinkErrors.Core
+namespace InboundLinkErrors.Core.Services
 {
     public class LinkErrorsService
     {

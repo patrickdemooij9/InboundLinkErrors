@@ -9,6 +9,8 @@ namespace InboundLinkErrors.Core.Models
         public string Url { get; }
         public bool IsHidden { get; set; }
         public bool IsDeleted { get; set; }
+        public string LastReferrer { get; set; }
+        public string LastUserAgent { get; set; }
         public int TimesAccessed { get; set; }
         public DateTime LastAccessedTime { get; set; }
 
