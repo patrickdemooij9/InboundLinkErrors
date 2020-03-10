@@ -4,11 +4,11 @@ using System.Net;
 
 namespace InboundLinkErrors.SimpleRedirects.Core
 {
-    public class MissingLinkSimpleRedirectAdapter : IRedirectAdapter
+    public class LinkErrorsSimpleRedirectAdapter : IRedirectAdapter
     {
         private readonly RedirectRepository _redirectRepository;
 
-        public MissingLinkSimpleRedirectAdapter(RedirectRepository redirectRepository)
+        public LinkErrorsSimpleRedirectAdapter(RedirectRepository redirectRepository)
         {
             _redirectRepository = redirectRepository;
         }
