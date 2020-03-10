@@ -10,6 +10,7 @@ The dashboard for the inbound link errors has multiple filters that can be used:
 - Hidden filter: Links that are hidden and non-hidden are shown.
 
 # Getting Started
-Just download the nuget package: //TODO: Add nuget package
-and enjoy your amazing dashboard in Umbraco.
+Just download the nuget package: ` Install-Package InboundLinkErrors ` and enjoy your amazing dashboard in Umbraco.
+
+If you want to connect the InboundLinkErrors to the SimpleRedirects plugin, you can download the following nuget package:  ` Install InboundLinkErrors.SimpleRedirects `. This will connect the InboundLinkErrors package to the SimpleRedirects package.
 
