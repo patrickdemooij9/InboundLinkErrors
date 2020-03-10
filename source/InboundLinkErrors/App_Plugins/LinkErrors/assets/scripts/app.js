@@ -39,6 +39,8 @@ angular.module("umbraco").controller("LinkErrorsController", function ($scope, $
     $scope.openRedirectDialog = function (linkError) {
         var redirectDialogOptions = {
             title: "Set redirect to",
+            view: "/App_Plugins/LinkErrors/assets/views/createRedirect.html",
+            size: "small",
             submit: function (model) {
                 if (model.selection.size <= 0) {
                     return;
@@ -52,7 +54,7 @@ angular.module("umbraco").controller("LinkErrorsController", function ($scope, $
                 editorService.close();
             }
         };
-        editorService.contentPicker(redirectDialogOptions);
+        editorService.open(redirectDialogOptions);
     }
 
     $scope.onSetRedirectResponse = function (linkError, response) {

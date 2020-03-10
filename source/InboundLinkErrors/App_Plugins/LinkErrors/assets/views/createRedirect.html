@@ -1,0 +1,36 @@
+<div ng-controller="createRedirect.controller">
+    <umb-editor-view>
+        <umb-editor-header name="model.title"
+                           name-locked="true"
+                           hide-alias="true"
+                           hide-icon="true"
+                           hide-description="true">
+        </umb-editor-header>
+        <umb-editor-container class="block-form">
+            <umb-box>
+                <umb-box-content>
+                    <umb-control-group label="Culture" description="Culture of the url to set">
+                        <select ng-model="selectedCulture" ng-options="culture.name for culture in cultures" class="umb-property-editor"></select>
+                    </umb-control-group>
+                    <umb-control-group>
+                        <h5>Link to page</h5>
+                        <div>
+                            <div>
+                                <umb-tree section="content"
+                                          hideheader="true"
+                                          hideoptions="true"
+                                          api="dialogTreeApi"
+                                          on-init="onTreeInit()"
+                                          enablelistviewexpand="true"
+                                          isdialog="true"
+                                          enablecheckboxes="true"
+                                          customtreeparams="{{customTreeParams}}">
+                                </umb-tree>
+                            </div>
+                        </div>
+                    </umb-control-group>
+                </umb-box-content>
+            </umb-box>
+        </umb-editor-container>
+    </umb-editor-view>
+</div>
