@@ -9,11 +9,13 @@
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/patrickdemooij9/InboundLinkErrors</PackageProjectUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
   </PropertyGroup>
-
+    
   <ItemGroup>
-    <PackageReference Include="InboundLinkErrors" Version="1.0.1" />
+      <PackageReference Include="InboundLinkErrors" Version="1.0.1">
+          <ExcludeAssets>contentFiles</ExcludeAssets>
+      </PackageReference>
     <PackageReference Include="SimpleRedirects" Version="1.0.7" />
   </ItemGroup>
 
