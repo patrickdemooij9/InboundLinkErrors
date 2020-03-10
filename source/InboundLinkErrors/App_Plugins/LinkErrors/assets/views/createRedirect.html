@@ -9,7 +9,7 @@
         <umb-editor-container class="block-form">
             <umb-box>
                 <umb-box-content>
-                    <umb-control-group label="Culture" description="Culture of the url to set">
+                    <umb-control-group label="Culture" description="Culture of the url to set" v-if="cultures.length > 1">
                         <select ng-model="selectedCulture" ng-options="culture.name for culture in cultures" class="umb-property-editor"></select>
                     </umb-control-group>
                     <umb-control-group>
@@ -32,5 +32,22 @@
                 </umb-box-content>
             </umb-box>
         </umb-editor-container>
+        <umb-editor-footer>
+            <umb-editor-footer-content-right>
+                <umb-button type="button"
+                            button-style="link"
+                            label-key="general_close"
+                            shortcut="esc"
+                            action="close()">
+                </umb-button>
+                <umb-button v-if="model.selectedNode && model.selectedNode.selected"
+                            type="button"
+                            button-style="success"
+                            label-key="general_submit"
+                            state="saveButtonState"
+                            action="submit(model)">
+                </umb-button>
+            </umb-editor-footer-content-right>
+        </umb-editor-footer>
     </umb-editor-view>
 </div>

@@ -42,10 +42,7 @@ angular.module("umbraco").controller("LinkErrorsController", function ($scope, $
             view: "/App_Plugins/LinkErrors/assets/views/createRedirect.html",
             size: "small",
             submit: function (model) {
-                if (model.selection.size <= 0) {
-                    return;
-                }
-                var selectedNodeId = model.selection[0].id;
+                var selectedNodeId = model.selectedNode.id;
                 editorService.close();
 
                 LinkErrorsApi.setRedirect(linkError.Id, selectedNodeId).then($scope.onSetRedirectResponse.bind(this, linkError));

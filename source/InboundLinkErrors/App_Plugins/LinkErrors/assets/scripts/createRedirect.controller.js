@@ -21,7 +21,7 @@ angular.module("umbraco").controller("createRedirect.controller",
             executed: false,
             treeReady: false,
             sync: function () {
-                if (this.executed || !this.treeReady || !($scope.model.target && $scope.model.target.path)) {
+                if (this.executed || !this.treeReady) {
                     return;
                 }
 
@@ -46,14 +46,13 @@ angular.module("umbraco").controller("createRedirect.controller",
 
             eventsService.emit("dialogs.linkPicker.select", args);
 
-            if ($scope.currentNode) {
+            if ($scope.model.selectedNode) {
                 //un-select if there's a current one selected
-                $scope.currentNode.selected = false;
+                $scope.model.selectedNode.selected = false;
             }
 
-            console.log("selected node!");
-            $scope.currentNode = args.node;
-            $scope.currentNode.selected = true;
+            $scope.model.selectedNode = args.node;
+            $scope.model.selectedNode.selected = true;
         }
 
         function nodeExpandedHandler(args) {
