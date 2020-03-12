@@ -38,14 +38,15 @@ angular.module("umbraco").controller("LinkErrorsController", function ($scope, $
 
     $scope.openRedirectDialog = function (linkError) {
         var redirectDialogOptions = {
-            title: "Set redirect to",
+            title: "Set redirect",
             view: "/App_Plugins/LinkErrors/assets/views/createRedirect.html",
             size: "small",
             submit: function (model) {
                 var selectedNodeId = model.selectedNode.id;
+                var selectedCulture = model.selectedCulture.culture;
                 editorService.close();
 
-                LinkErrorsApi.setRedirect(linkError.Id, selectedNodeId).then($scope.onSetRedirectResponse.bind(this, linkError));
+                LinkErrorsApi.setRedirect(linkError.Id, selectedNodeId, selectedCulture).then($scope.onSetRedirectResponse.bind(this, linkError));
             },
             close: function () {
                 editorService.close();
@@ -191,8 +192,8 @@ angular.module("umbraco.resources").factory("LinkErrorsApi", function ($http) {
         remove: function (id) {
             return $http.delete("backoffice/LinkErrors/LinkErrorsApi/Delete/" + id);
         },
-        setRedirect: function (linkErrorId, nodeId) {
-            return $http.post("backoffice/LinkErrors/LinkErrorsApi/SetRedirect?linkErrorId=" + linkErrorId + "&nodeId=" + nodeId);
+        setRedirect: function (linkErrorId, nodeId, culture) {
+            return $http.post("backoffice/LinkErrors/LinkErrorsApi/SetRedirect?linkErrorId=" + linkErrorId + "&nodeId=" + nodeId + "&culture=" + culture);
         },
         hide: function (linkErrorId, toggle) {
             return $http.post("backoffice/LinkErrors/LinkErrorsApi/Hide?id=" + linkErrorId + "&toggle=" + toggle);

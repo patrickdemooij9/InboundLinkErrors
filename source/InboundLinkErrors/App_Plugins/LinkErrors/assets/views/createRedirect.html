@@ -9,13 +9,24 @@
         <umb-editor-container class="block-form">
             <umb-box>
                 <umb-box-content>
-                    <umb-control-group label="Culture" description="Culture of the url to set" v-if="cultures.length > 1">
-                        <select ng-model="selectedCulture" ng-options="culture.name for culture in cultures" class="umb-property-editor"></select>
-                    </umb-control-group>
-                    <umb-control-group>
-                        <h5>Link to page</h5>
-                        <div>
-                            <div>
+                    <umb-control-group label="Select page">
+                        <div ng-hide="miniListView">
+                            <umb-tree-search-box hide-search-callback="hideSearch"
+                                                 search-callback="onSearchResults"
+                                                 search-from-id="{{searchInfo.searchFromId}}"
+                                                 search-from-name="{{searchInfo.searchFromName}}"
+                                                 datatype-key="{{searchInfo.dataTypeKey}}"
+                                                 show-search="{{searchInfo.showSearch}}"
+                                                 section="{{section}}">
+                            </umb-tree-search-box>
+
+                            <br />
+
+                            <umb-tree-search-results ng-if="searchInfo.showSearch"
+                                                     results="searchInfo.results"
+                                                     select-result-callback="selectResult">
+                            </umb-tree-search-results>
+                            <div ng-hide="searchInfo.showSearch">
                                 <umb-tree section="content"
                                           hideheader="true"
                                           hideoptions="true"
@@ -28,6 +39,16 @@
                                 </umb-tree>
                             </div>
                         </div>
+                        <umb-mini-list-view ng-if="miniListView"
+                                            node="miniListView"
+                                            entity-type="Document"
+                                            on-select="selectListViewNode(node)"
+                                            on-close="closeMiniListView()">
+                        </umb-mini-list-view>
+                    </umb-control-group>
+
+                    <umb-control-group label="Culture" description="Culture of the url" ng-if="nodeCultures && allCultures.length > 1">
+                        <select name="culture" ng-options="culture.name for culture in nodeCultures" ng-model="model.selectedCulture" class="umb-property-editor"></select>
                     </umb-control-group>
                 </umb-box-content>
             </umb-box>
@@ -40,7 +61,7 @@
                             shortcut="esc"
                             action="close()">
                 </umb-button>
-                <umb-button v-if="model.selectedNode && model.selectedNode.selected"
+                <umb-button ng-if="model.selectedNode && model.selectedNode.selected && model.selectedCulture"
                             type="button"
                             button-style="success"
                             label-key="general_submit"
