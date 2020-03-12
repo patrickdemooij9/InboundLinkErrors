@@ -12,7 +12,20 @@ The dashboard for the inbound link errors has multiple filters that can be used:
 - Hidden filter: Links that are hidden and non-hidden are shown.
 
 # Getting Started
-Just download the nuget package: ` Install-Package InboundLinkErrors ` and enjoy your amazing dashboard in Umbraco.
+Download the nuget package: ` Install-Package InboundLinkErrors ` or install it through Umbraco packages. After installing, make sure the following two lines can be found in your Web.config. Without it, the application will **not** be able to track your 404 responses.
+```xml
+<configuration>
+   ...
+  <system.webServer>
+      ...
+    <modules>
+      ...
+      <remove name="LinkErrorsHttpModule"/>
+      <add name="LinkErrorsHttpModule" type="InboundLinkErrors.Core.LinkErrorsHttpModule, InboundLinkErrors" />
+    </modules>
+  </system.webServer>
+</configuration>
+```
 
 # Configuration
 By default, the plugin will write your new redirects to the Url tracker of Umbraco. You are however able to change this to with any of the following packages:
