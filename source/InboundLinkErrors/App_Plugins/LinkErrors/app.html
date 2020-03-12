@@ -60,7 +60,7 @@
                                         <span>{{item.LastAccessedTime | date:'M/d/yy h:mm a'}}</span>
                                     </td>
                                     <td data-title="'Actions'">
-                                        <button type="button" class="btn btn-primary" ng-click="openRedirectDialog(item)">Set Redirect</button>
+                                        <button type="button" class="btn btn-primary" ng-if="!item.IsMedia" ng-click="openRedirectDialog(item)">Set Redirect</button>
                                         <button type="button" class="btn btn-danger" ng-click="deleteLinkError(item)">Delete</button>
                                         <button type="button" class="btn btn-info" ng-if="!item.IsHidden" ng-click="toggleHideLinkError(item, true)">Hide</button>
                                         <button type="button" class="btn btn-info" ng-if="item.IsHidden" ng-click="toggleHideLinkError(item, false)">Show</button>

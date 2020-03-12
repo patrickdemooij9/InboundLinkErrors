@@ -8,7 +8,7 @@
         <Description>Umbraco dashboard for tracking and showing inbound link errors</Description>
         <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/patrickdemooij9/InboundLinkErrors</PackageProjectUrl>
-        <Version>1.0.1</Version>
+        <Version>1.0.2</Version>
         <Product>InboundLinkErrors</Product>
     </PropertyGroup>
 
@@ -16,9 +16,11 @@
       <None Remove="App_Plugins\LinkErrors\app.html" />
       <None Remove="App_Plugins\LinkErrors\assets\lang\en.xml" />
       <None Remove="App_Plugins\LinkErrors\assets\scripts\app.js" />
+      <None Remove="App_Plugins\LinkErrors\assets\scripts\createRedirect.controller.js" />
       <None Remove="App_Plugins\LinkErrors\assets\scripts\vendors.min.js" />
       <None Remove="App_Plugins\LinkErrors\assets\styles\styles.min.css" />
       <None Remove="App_Plugins\LinkErrors\assets\styles\vendors.min.css" />
+      <None Remove="App_Plugins\LinkErrors\assets\views\createRedirect.html" />
       <None Remove="App_Plugins\LinkErrors\package.manifest" />
     </ItemGroup>
 
@@ -26,9 +28,11 @@
         <Content Include="App_Plugins\LinkErrors\app.html" />
         <Content Include="App_Plugins\LinkErrors\assets\lang\en.xml" />
         <Content Include="App_Plugins\LinkErrors\assets\scripts\app.js" />
+        <Content Include="App_Plugins\LinkErrors\assets\scripts\createRedirect.controller.js" />
         <Content Include="App_Plugins\LinkErrors\assets\scripts\vendors.min.js" />
         <Content Include="App_Plugins\LinkErrors\assets\styles\styles.min.css" />
         <Content Include="App_Plugins\LinkErrors\assets\styles\vendors.min.css" />
+        <Content Include="App_Plugins\LinkErrors\assets\views\createRedirect.html" />
         <Content Include="App_Plugins\LinkErrors\package.manifest" />
         <Content Include="web.config.install.xdt" />
         <Content Include="web.config.uninstall.xdt" />
