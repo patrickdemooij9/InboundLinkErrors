@@ -1,5 +1,6 @@
 using System;
 using InboundLinkErrors.Core.Interfaces;
+using Umbraco.Core.Models.PublishedContent;
 using Umbraco.Core.Services;
 using Umbraco.Web;
 
@@ -16,12 +17,9 @@ namespace InboundLinkErrors.Core
             _redirectUrlService = redirectUrlService;
         }
 
-        public void AddRedirect(string fromUrl, string toUrl)
+        public void AddRedirect(string fromUrl, IPublishedContent nodeTo, string culture)
         {
-            using (var contextRef = _contextFactory.EnsureUmbracoContext())
-            {
-                _redirectUrlService.Register(new Uri(fromUrl).PathAndQuery.ToLowerInvariant(), contextRef.UmbracoContext.Content.GetByRoute(toUrl).Key);
-            }
+            _redirectUrlService.Register(new Uri(fromUrl).PathAndQuery.ToLowerInvariant(), nodeTo.Key, culture);
         }
     }
 }

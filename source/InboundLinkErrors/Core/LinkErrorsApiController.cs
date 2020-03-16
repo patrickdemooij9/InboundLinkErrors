@@ -39,7 +39,7 @@ namespace InboundLinkErrors.Core
             if (node is null)
                 return new LinkErrorRequestResponse("Umbraco node could not be found!");
 
-            _linkErrorsService.SetRedirect(linkErrorId, node.Url(culture));
+            _linkErrorsService.SetRedirect(linkErrorId, node, culture);
             return new LinkErrorRequestResponse();
         }
 
