@@ -7,6 +7,7 @@ using Umbraco.Web;
 
 namespace InboundLinkErrors.Core
 {
+    [RuntimeLevel(MinLevel = RuntimeLevel.Boot)]
     public class LinkErrorsUserComposer : IUserComposer
     {
         public void Compose(Composition composition)

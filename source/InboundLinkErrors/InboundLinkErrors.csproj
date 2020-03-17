@@ -8,7 +8,7 @@
         <Description>Umbraco dashboard for tracking and showing inbound link errors</Description>
         <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
         <PackageProjectUrl>https://github.com/patrickdemooij9/InboundLinkErrors</PackageProjectUrl>
-        <Version>1.0.5</Version>
+        <Version>1.0.6</Version>
         <Product>InboundLinkErrors</Product>
         <PackageIconUrl>https://raw.githubusercontent.com/patrickdemooij9/InboundLinkErrors/master/package/InboundLinkErrorsLogo.png</PackageIconUrl>
     </PropertyGroup>
