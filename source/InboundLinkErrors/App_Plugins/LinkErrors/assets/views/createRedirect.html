@@ -47,7 +47,8 @@
                         </umb-mini-list-view>
                     </umb-control-group>
 
-                    <umb-control-group label="Culture" description="Culture of the url" ng-if="nodeCultures && allCultures.length > 1">
+                    <span ng-if="nodeCultures.length <= 0">The system could not find any urls for this node!</span>
+                    <umb-control-group label="Culture" description="Culture of the url" ng-if="nodeCultures && nodeCultures.length > 0 && allCultures.length > 1">
                         <select name="culture" ng-options="culture.name for culture in nodeCultures" ng-model="model.selectedCulture" class="umb-property-editor"></select>
                     </umb-control-group>
                 </umb-box-content>
