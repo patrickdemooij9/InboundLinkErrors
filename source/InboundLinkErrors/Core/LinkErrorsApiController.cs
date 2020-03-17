@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Web.Http;
 using InboundLinkErrors.Core.Models;
 using InboundLinkErrors.Core.Services;
+using Umbraco.Web;
 using Umbraco.Web.Mvc;
 using Umbraco.Web.WebApi;
 
@@ -33,16 +34,17 @@ namespace InboundLinkErrors.Core
         }
 
         [HttpPost]
-        public LinkErrorRequestResponse SetRedirect(int linkErrorId, int nodeId)
+        public LinkErrorRequestResponse SetRedirect(int linkErrorId, int nodeId, string culture)
         {
             var node = Umbraco.Content(nodeId);
             if (node is null)
                 return new LinkErrorRequestResponse("Umbraco node could not be found!");
 
-            _linkErrorsService.SetRedirect(linkErrorId, node.Url);
+            _linkErrorsService.SetRedirect(linkErrorId, node, culture);
             return new LinkErrorRequestResponse();
         }
 
+        [HttpPost]
         public LinkErrorRequestResponse Hide(int id, bool toggle)
         {
             _linkErrorsService.ToggleHide(id, toggle);

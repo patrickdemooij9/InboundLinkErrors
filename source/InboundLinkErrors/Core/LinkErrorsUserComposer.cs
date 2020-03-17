@@ -9,6 +9,7 @@ using Umbraco.Web;
 
 namespace InboundLinkErrors.Core
 {
+    [RuntimeLevel(MinLevel = RuntimeLevel.Boot)]
     public class LinkErrorsUserComposer : IUserComposer
     {
         public void Compose(Composition composition)
@@ -21,7 +22,7 @@ namespace InboundLinkErrors.Core
             composition.Register<LinkErrorsRepository>(Lifetime.Request);
             composition.Register<LinkErrorsService>(Lifetime.Request);
             composition.Register<LinkErrorsInjectedModule>(Lifetime.Request);
-            composition.Register<IRedirectService, UmbracoRedirectAdapter>(Lifetime.Request);
+            composition.Register<IRedirectAdapter, UmbracoRedirectAdapter>(Lifetime.Request);
         }
     }
 }

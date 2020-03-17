@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net472</TargetFramework>
+    <Authors>Patrick</Authors>
+    <Product>InboundLinkErrors</Product>
+    <Description>Adapter for using InboundLinkErrors together with SimpleRedirects</Description>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/patrickdemooij9/InboundLinkErrors</PackageProjectUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.5</Version>
+    <PackageIconUrl>https://raw.githubusercontent.com/patrickdemooij9/InboundLinkErrors/master/package/InboundLinkErrorsLogo.png</PackageIconUrl>
+  </PropertyGroup>
+    
+  <ItemGroup>
+      <PackageReference Include="InboundLinkErrors" Version="1.0.5">
+          <ExcludeAssets>contentFiles</ExcludeAssets>
+      </PackageReference>
+    <PackageReference Include="SimpleRedirects" Version="1.0.7" />
+  </ItemGroup>
+
+</Project>

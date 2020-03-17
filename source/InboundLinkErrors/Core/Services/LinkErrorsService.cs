@@ -4,16 +4,17 @@ using InboundLinkErrors.Core.Interfaces;
 using InboundLinkErrors.Core.Models;
 using InboundLinkErrors.Core.Repositories;
 using Umbraco.Core.Mapping;
+using Umbraco.Core.Models.PublishedContent;
 
 namespace InboundLinkErrors.Core.Services
 {
     public class LinkErrorsService
     {
         private readonly LinkErrorsRepository _linkErrorsRepository;
-        private readonly IRedirectService _redirectService;
+        private readonly IRedirectAdapter _redirectService;
         private readonly UmbracoMapper _umbracoMapper;
 
-        public LinkErrorsService(LinkErrorsRepository linkErrorsRepository, UmbracoMapper umbracoMapper, IRedirectService redirectService)
+        public LinkErrorsService(LinkErrorsRepository linkErrorsRepository, UmbracoMapper umbracoMapper, IRedirectAdapter redirectService)
         {
             _linkErrorsRepository = linkErrorsRepository;
             _redirectService = redirectService;
@@ -85,10 +86,10 @@ namespace InboundLinkErrors.Core.Services
             }
         }
 
-        public void SetRedirect(int linkErrorId, string urlTo)
+        public void SetRedirect(int linkErrorId, IPublishedContent nodeTo, string culture)
         {
             var linkError = Get(linkErrorId);
-            _redirectService.AddRedirect(linkError.Url, urlTo);
+            _redirectService.AddRedirect(linkError.Url, nodeTo, culture);
             Delete(linkErrorId);
         }
     }
