@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using InboundLinkErrors.Core.Models;
+using NPoco;
 using Umbraco.Core.Logging;
 using Umbraco.Core.Persistence;
 using Umbraco.Core.Scoping;
@@ -57,9 +58,7 @@ namespace InboundLinkErrors.Core.Repositories
         {
             using (var scope = _scopeProvider.CreateScope())
             {
-                var sql = _scopeProvider.SqlContext.Sql()
-                    .SelectAll()
-                    .From<LinkErrorEntity>()
+                var sql = GetBaseQuery()
                     .Where<LinkErrorEntity>(error => error.Url.Equals(url));
                 return scope.Database.SingleOrDefault<LinkErrorEntity>(sql);
             }
@@ -69,13 +68,20 @@ namespace InboundLinkErrors.Core.Repositories
         {
             using (var scope = _scopeProvider.CreateScope())
             {
-                var sql = _scopeProvider.SqlContext.Sql().SelectAll().From<LinkErrorEntity>();
+                var sql = GetBaseQuery();
                 if (!includeDeleted)
                 {
                     sql = sql.Where<LinkErrorEntity>(it => !it.IsDeleted);
                 }
                 return scope.Database.Fetch<LinkErrorEntity>(sql);
             }
+        }
+
+        private Sql<ISqlContext> GetBaseQuery()
+        {
+            return _scopeProvider.SqlContext.Sql()
+                .SelectAll()
+                .From<LinkErrorEntity>();
         }
     }
 }

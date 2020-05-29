@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Web;
 using InboundLinkErrors.Core.Interfaces;
 using InboundLinkErrors.Core.Models;
 using InboundLinkErrors.Core.Repositories;
@@ -58,9 +59,9 @@ namespace InboundLinkErrors.Core.Services
             Update(dto);
         }
 
-        public void TrackMissingLink(string url)
+        public void TrackMissingLink(HttpRequest request)
         {
-            var formattedUrl = url.ToLowerInvariant();
+            var formattedUrl = request.Url.AbsoluteUri.ToLowerInvariant();
             var linkError = GetByUrl(formattedUrl) ?? new LinkErrorDto(formattedUrl);
 
             //If a missing link is deleted, we want to "reset" it.

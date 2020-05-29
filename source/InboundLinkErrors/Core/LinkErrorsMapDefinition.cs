@@ -1,10 +1,18 @@
 using InboundLinkErrors.Core.Models;
+using InboundLinkErrors.Core.Services;
 using Umbraco.Core.Mapping;
 
 namespace InboundLinkErrors.Core
 {
     public class LinkErrorsMapDefinition : IMapDefinition
     {
+        private readonly LinkErrorsReferrerService _referrerService;
+
+        public LinkErrorsMapDefinition(LinkErrorsReferrerService referrerService)
+        {
+            _referrerService = referrerService;
+        }
+
         public void DefineMaps(UmbracoMapper mapper)
         {
             mapper.Define<LinkErrorEntity, LinkErrorDto>(
@@ -35,7 +43,6 @@ namespace InboundLinkErrors.Core
                 (source, target, context) =>
                 {
                     target.Id = source.Id;
-                    target.LinkErrorId = source.LinkErrorId;
                     target.Referrer = source.Referrer;
                     target.VisitCount = source.VisitCount;
                 });
@@ -45,7 +52,6 @@ namespace InboundLinkErrors.Core
                 (source, target, context) =>
                 {
                     target.Id = source.Id;
-                    target.LinkErrorId = source.LinkErrorId;
                     target.Referrer = source.Referrer;
                     target.VisitCount = source.VisitCount;
                 });
