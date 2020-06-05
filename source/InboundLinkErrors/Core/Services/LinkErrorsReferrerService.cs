@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using InboundLinkErrors.Core.Models;
@@ -27,7 +28,13 @@ namespace InboundLinkErrors.Core.Services
 
         public void TrackReferrer(string referrer, int linkErrorId)
         {
+            var cleanedReferrer = referrer.ToLowerInvariant().Trim().TrimEnd('/');
+            var entity = _repository.Get(linkErrorId, cleanedReferrer) ?? _repository.Add(new LinkErrorReferrerEntity {LinkErrorId = linkErrorId, Referrer = cleanedReferrer});
 
+            entity.VisitCount++;
+            entity.LastAccessedTime = DateTime.UtcNow;
+
+            _repository.Update(entity);
         }
 
         public IEnumerable<LinkErrorReferrerDto> GetAll(int linkErrorId)

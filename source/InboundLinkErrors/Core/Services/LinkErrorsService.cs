@@ -14,22 +14,24 @@ namespace InboundLinkErrors.Core.Services
         private readonly LinkErrorsRepository _linkErrorsRepository;
         private readonly IRedirectAdapter _redirectService;
         private readonly UmbracoMapper _umbracoMapper;
+        private readonly LinkErrorsReferrerService _linkErrorsReferrerService;
 
-        public LinkErrorsService(LinkErrorsRepository linkErrorsRepository, UmbracoMapper umbracoMapper, IRedirectAdapter redirectService)
+        public LinkErrorsService(LinkErrorsRepository linkErrorsRepository, UmbracoMapper umbracoMapper, IRedirectAdapter redirectService, LinkErrorsReferrerService linkErrorsReferrerService)
         {
             _linkErrorsRepository = linkErrorsRepository;
             _redirectService = redirectService;
             _umbracoMapper = umbracoMapper;
+            _linkErrorsReferrerService = linkErrorsReferrerService;
         }
 
-        public void Add(LinkErrorDto model)
+        public LinkErrorDto Add(LinkErrorDto model)
         {
-            _linkErrorsRepository.Add(_umbracoMapper.Map<LinkErrorDto, LinkErrorEntity>(model));
+            return _umbracoMapper.Map<LinkErrorEntity, LinkErrorDto>(_linkErrorsRepository.Add(_umbracoMapper.Map<LinkErrorDto, LinkErrorEntity>(model)));
         }
 
-        public void Update(LinkErrorDto model)
+        public LinkErrorDto Update(LinkErrorDto model)
         {
-            _linkErrorsRepository.Update(_umbracoMapper.Map<LinkErrorDto, LinkErrorEntity>(model));
+            return _umbracoMapper.Map<LinkErrorEntity, LinkErrorDto>(_linkErrorsRepository.Update(_umbracoMapper.Map<LinkErrorDto, LinkErrorEntity>(model)));
         }
 
         public void Delete(int id)
@@ -77,13 +79,11 @@ namespace InboundLinkErrors.Core.Services
 
             linkError.LastAccessedTime = DateTime.UtcNow;
 
-            if (linkError.Id == 0)
+            linkError = linkError.Id == 0 ? Add(linkError) : Update(linkError);
+
+            if (!string.IsNullOrWhiteSpace(request.UrlReferrer?.AbsoluteUri))
             {
-                Add(linkError);
-            }
-            else
-            {
-                Update(linkError);
+                _linkErrorsReferrerService.TrackReferrer(request.UrlReferrer.AbsoluteUri, linkError.Id);
             }
         }
 

@@ -44,6 +44,17 @@ namespace InboundLinkErrors.Core.Repositories
             }
         }
 
+        public LinkErrorReferrerEntity Get(int linkErrorId, string referrer)
+        {
+            using (var scope = _scopeProvider.CreateScope())
+            {
+                var sql = scope.SqlContext.Sql().SelectAll().From<LinkErrorReferrerEntity>()
+                    .Where<LinkErrorReferrerEntity>(it =>
+                        it.LinkErrorId == linkErrorId && it.Referrer.Equals(referrer));
+                return scope.Database.FirstOrDefault<LinkErrorReferrerEntity>(sql);
+            }
+        }
+
         public IEnumerable<LinkErrorReferrerEntity> GetAll()
         {
             using (var scope = _scopeProvider.CreateScope())

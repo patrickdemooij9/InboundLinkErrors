@@ -1,3 +1,4 @@
+using System;
 using NPoco;
 using Umbraco.Core.Persistence.DatabaseAnnotations;
 
@@ -21,5 +22,8 @@ namespace InboundLinkErrors.Core.Models
 
         [Column("VisitCount")]
         public int VisitCount { get; set; }
+
+        [Column("LastAccessedTime")]
+        public DateTime LastAccessedTime { get; set; }
     }
 }
