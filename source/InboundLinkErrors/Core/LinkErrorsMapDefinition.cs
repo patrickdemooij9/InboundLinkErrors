@@ -6,11 +6,8 @@ namespace InboundLinkErrors.Core
 {
     public class LinkErrorsMapDefinition : IMapDefinition
     {
-        private readonly LinkErrorsReferrerService _referrerService;
-
-        public LinkErrorsMapDefinition(LinkErrorsReferrerService referrerService)
+        public LinkErrorsMapDefinition()
         {
-            _referrerService = referrerService;
         }
 
         public void DefineMaps(UmbracoMapper mapper)
@@ -24,6 +21,7 @@ namespace InboundLinkErrors.Core
                     target.IsDeleted = source.IsDeleted;
                     target.TimesAccessed = source.TimesAccessed;
                     target.LastAccessedTime = source.LastAccessedTime;
+                    target.LastReferrer = source.LatestReferrer;
                 });
 
             mapper.Define<LinkErrorDto, LinkErrorEntity>(

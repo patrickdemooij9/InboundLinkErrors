@@ -80,8 +80,11 @@ namespace InboundLinkErrors.Core.Repositories
         private Sql<ISqlContext> GetBaseQuery()
         {
             return _scopeProvider.SqlContext.Sql()
-                .SelectAll()
-                .From<LinkErrorEntity>();
+                .Select("InboundLinkErrors.*, InboundLinkErrorReferrers.Referrer as 'LatestReferrer'")
+                .From<LinkErrorEntity>()
+                .LeftJoin<LinkErrorReferrerEntity>()
+                .On<LinkErrorEntity, LinkErrorReferrerEntity>(left => left.Id, right => right.LinkErrorId)
+                .Where("[InboundLinkErrorReferrers].LastAccessedTime is null or [InboundLinkErrorReferrers].LastAccessedTime = (select MAX(LastAccessedTime) from InboundLinkErrorReferrers group by LinkErrorId)");
         }
     }
 }
