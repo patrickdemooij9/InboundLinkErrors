@@ -1,4 +1,6 @@
 using InboundLinkErrors.Core.Models;
+using InboundLinkErrors.Core.Models.Data;
+using InboundLinkErrors.Core.Models.Dto;
 using InboundLinkErrors.Core.Services;
 using Umbraco.Core.Mapping;
 
@@ -21,7 +23,6 @@ namespace InboundLinkErrors.Core
                     target.IsDeleted = source.IsDeleted;
                     target.TimesAccessed = source.TimesAccessed;
                     target.LastAccessedTime = source.LastAccessedTime;
-                    target.LastReferrer = source.LatestReferrer;
                 });
 
             mapper.Define<LinkErrorDto, LinkErrorEntity>(
@@ -35,6 +36,7 @@ namespace InboundLinkErrors.Core
                     target.TimesAccessed = source.TimesAccessed;
                     target.LastAccessedTime = source.LastAccessedTime;
                 });
+
 
             mapper.Define<LinkErrorReferrerEntity, LinkErrorReferrerDto>(
                 (source, context) => new LinkErrorReferrerDto(),
@@ -51,6 +53,24 @@ namespace InboundLinkErrors.Core
                 {
                     target.Id = source.Id;
                     target.Referrer = source.Referrer;
+                    target.VisitCount = source.VisitCount;
+                });
+
+            mapper.Define<LinkErrorUserAgentEntity, LinkErrorUserAgentDto>(
+                (source, context) => new LinkErrorUserAgentDto(),
+                (source, target, context) =>
+                {
+                    target.Id = source.Id;
+                    target.UserAgent = source.UserAgent;
+                    target.VisitCount = source.VisitCount;
+                });
+
+            mapper.Define<LinkErrorUserAgentDto, LinkErrorUserAgentEntity>(
+                (source, context) => new LinkErrorUserAgentEntity(),
+                (source, target, context) =>
+                {
+                    target.Id = source.Id;
+                    target.UserAgent = source.UserAgent;
                     target.VisitCount = source.VisitCount;
                 });
         }

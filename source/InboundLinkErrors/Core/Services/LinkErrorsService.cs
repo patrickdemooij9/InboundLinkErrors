@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Web;
 using InboundLinkErrors.Core.Interfaces;
 using InboundLinkErrors.Core.Models;
+using InboundLinkErrors.Core.Models.Data;
+using InboundLinkErrors.Core.Models.Dto;
 using InboundLinkErrors.Core.Repositories;
 using Umbraco.Core.Mapping;
 using Umbraco.Core.Models.PublishedContent;
@@ -15,13 +17,15 @@ namespace InboundLinkErrors.Core.Services
         private readonly IRedirectAdapter _redirectService;
         private readonly UmbracoMapper _umbracoMapper;
         private readonly LinkErrorsReferrerService _linkErrorsReferrerService;
+        private readonly LinkErrorsUserAgentService _linkErrorsUserAgentService;
 
-        public LinkErrorsService(LinkErrorsRepository linkErrorsRepository, UmbracoMapper umbracoMapper, IRedirectAdapter redirectService, LinkErrorsReferrerService linkErrorsReferrerService)
+        public LinkErrorsService(LinkErrorsRepository linkErrorsRepository, UmbracoMapper umbracoMapper, IRedirectAdapter redirectService, LinkErrorsReferrerService linkErrorsReferrerService, LinkErrorsUserAgentService linkErrorsUserAgentService)
         {
             _linkErrorsRepository = linkErrorsRepository;
             _redirectService = redirectService;
             _umbracoMapper = umbracoMapper;
             _linkErrorsReferrerService = linkErrorsReferrerService;
+            _linkErrorsUserAgentService = linkErrorsUserAgentService;
         }
 
         public LinkErrorDto Add(LinkErrorDto model)
@@ -84,6 +88,11 @@ namespace InboundLinkErrors.Core.Services
             if (!string.IsNullOrWhiteSpace(request.UrlReferrer?.AbsoluteUri))
             {
                 _linkErrorsReferrerService.TrackReferrer(request.UrlReferrer.AbsoluteUri, linkError.Id);
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.UserAgent))
+            {
+                _linkErrorsUserAgentService.TrackUserAgent(request.UserAgent, linkError.Id);
             }
         }
 

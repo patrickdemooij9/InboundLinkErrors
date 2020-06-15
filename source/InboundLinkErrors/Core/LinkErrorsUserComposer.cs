@@ -23,6 +23,8 @@ namespace InboundLinkErrors.Core
             composition.Register<LinkErrorsService>(Lifetime.Request);
             composition.Register<LinkErrorsReferrerRepository>(Lifetime.Request);
             composition.Register<LinkErrorsReferrerService>(Lifetime.Request);
+            composition.Register<LinkErrorsUserAgentRepository>(Lifetime.Request);
+            composition.Register<LinkErrorsUserAgentService>(Lifetime.Request);
             composition.Register<LinkErrorsInjectedModule>(Lifetime.Request);
             composition.Register<IRedirectAdapter, UmbracoRedirectAdapter>(Lifetime.Request);
         }

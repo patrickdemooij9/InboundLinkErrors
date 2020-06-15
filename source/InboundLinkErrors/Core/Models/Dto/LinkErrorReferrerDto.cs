@@ -1,4 +1,4 @@
-namespace InboundLinkErrors.Core.Models
+namespace InboundLinkErrors.Core.Models.Dto
 {
     public class LinkErrorReferrerDto
     {

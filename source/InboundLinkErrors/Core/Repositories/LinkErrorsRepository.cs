@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using InboundLinkErrors.Core.Models;
+using InboundLinkErrors.Core.Models.Data;
 using NPoco;
 using Umbraco.Core.Logging;
 using Umbraco.Core.Persistence;
@@ -9,13 +10,11 @@ namespace InboundLinkErrors.Core.Repositories
 {
     public class LinkErrorsRepository
     {
-        private IScopeProvider _scopeProvider;
-        private ILogger _logger;
+        private readonly IScopeProvider _scopeProvider;
 
-        public LinkErrorsRepository(IScopeProvider scopeProvider, ILogger logger)
+        public LinkErrorsRepository(IScopeProvider scopeProvider)
         {
             _scopeProvider = scopeProvider;
-            _logger = logger;
         }
 
         public LinkErrorEntity Add(LinkErrorEntity entity)
@@ -80,11 +79,13 @@ namespace InboundLinkErrors.Core.Repositories
         private Sql<ISqlContext> GetBaseQuery()
         {
             return _scopeProvider.SqlContext.Sql()
-                .Select("InboundLinkErrors.*, InboundLinkErrorReferrers.Referrer as 'LatestReferrer'")
+                .Select("InboundLinkErrors.*, InboundLinkErrorReferrers.Referrer as 'LatestReferrer', InboundLinkErrorUserAgent.UserAgent as 'LatestUserAgent'")
                 .From<LinkErrorEntity>()
                 .LeftJoin<LinkErrorReferrerEntity>()
                 .On<LinkErrorEntity, LinkErrorReferrerEntity>(left => left.Id, right => right.LinkErrorId)
-                .Where("[InboundLinkErrorReferrers].LastAccessedTime is null or [InboundLinkErrorReferrers].LastAccessedTime = (select MAX(LastAccessedTime) from InboundLinkErrorReferrers group by LinkErrorId)");
+                .LeftJoin<LinkErrorUserAgentEntity>()
+                .On<LinkErrorEntity, LinkErrorUserAgentEntity>(left => left.Id, right => right.LinkErrorId)
+                .Where("[InboundLinkErrorReferrers].LastAccessedTime is null or [InboundLinkErrorReferrers].LastAccessedTime = (select MAX(LastAccessedTime) from InboundLinkErrorReferrers where LinkErrorId = [InboundLinkErrors].Id group by LinkErrorId) and [InboundLinkErrorUserAgent].LastAccessedTime is null or [InboundLinkErrorUserAgent].LastAccessedTime = (select MAX(LastAccessedTime) from InboundLinkErrorUserAgent where LinkErrorId = [InboundLinkErrors].Id group by LinkErrorId)");
         }
     }
 }

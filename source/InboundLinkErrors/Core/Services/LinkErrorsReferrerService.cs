@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using InboundLinkErrors.Core.Models;
+using InboundLinkErrors.Core.Models.Data;
+using InboundLinkErrors.Core.Models.Dto;
 using InboundLinkErrors.Core.Repositories;
 using Umbraco.Core.Mapping;
 
@@ -18,17 +20,10 @@ namespace InboundLinkErrors.Core.Services
             _mapper = mapper;
         }
 
-        public void Add(LinkErrorReferrerDto model, int linkErrorId)
-        {
-            var entity = _mapper.Map<LinkErrorReferrerDto, LinkErrorReferrerEntity>(model);
-            entity.LinkErrorId = linkErrorId;
-
-            _repository.Add(entity);
-        }
-
         public void TrackReferrer(string referrer, int linkErrorId)
         {
             var cleanedReferrer = referrer.ToLowerInvariant().Trim().TrimEnd('/');
+
             var entity = _repository.Get(linkErrorId, cleanedReferrer) ?? _repository.Add(new LinkErrorReferrerEntity {LinkErrorId = linkErrorId, Referrer = cleanedReferrer, LastAccessedTime = DateTime.UtcNow});
 
             entity.VisitCount++;

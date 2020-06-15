@@ -2,23 +2,22 @@ using System;
 using NPoco;
 using Umbraco.Core.Persistence.DatabaseAnnotations;
 
-namespace InboundLinkErrors.Core.Models
+namespace InboundLinkErrors.Core.Models.Data
 {
-    [TableName("InboundLinkErrorReferrers")]
+    [TableName("InboundLinkErrorUserAgent")]
     [PrimaryKey("Id", AutoIncrement = true)]
-    [ExplicitColumns]
-    public class LinkErrorReferrerEntity
+    public class LinkErrorUserAgentEntity
     {
         [Column("Id")]
         [PrimaryKeyColumn(AutoIncrement = true)]
         public int Id { get; set; }
 
         [Column("LinkErrorId")]
-        [ForeignKey(typeof(LinkErrorEntity), Column = "Id", Name = "FK_InboundLinkErrorRefferer_InboundLinkError")]
+        [ForeignKey(typeof(LinkErrorEntity), Column = "Id", Name = "FK_InboundLinkErrorUserAgent_InboundLinkError")]
         public int LinkErrorId { get; set; }
 
-        [Column("Referrer")]
-        public string Referrer { get; set; }
+        [Column("UserAgent")]
+        public string UserAgent { get; set; }
 
         [Column("VisitCount")]
         public int VisitCount { get; set; }

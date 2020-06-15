@@ -2,7 +2,7 @@ using System;
 using NPoco;
 using Umbraco.Core.Persistence.DatabaseAnnotations;
 
-namespace InboundLinkErrors.Core.Models
+namespace InboundLinkErrors.Core.Models.Data
 {
     [TableName("InboundLinkErrors")]
     [PrimaryKey("Id", AutoIncrement = true)]
@@ -29,6 +29,9 @@ namespace InboundLinkErrors.Core.Models
         public DateTime LastAccessedTime { get; set; }
 
         [ResultColumn]
-        public string LatestReferrer { get; set; }
+        public string LatestReferrer { get; }
+
+        [ResultColumn]
+        public string LatestUserAgent { get; }
     }
 }

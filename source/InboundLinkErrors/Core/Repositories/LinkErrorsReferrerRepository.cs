@@ -1,5 +1,6 @@
 using InboundLinkErrors.Core.Models;
 using System.Collections.Generic;
+using InboundLinkErrors.Core.Models.Data;
 using Umbraco.Core.Persistence;
 using Umbraco.Core.Scoping;
 

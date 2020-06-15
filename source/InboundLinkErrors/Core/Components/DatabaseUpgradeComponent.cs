@@ -28,7 +28,8 @@ namespace InboundLinkErrors.Core.Components
             var plan = new MigrationPlan("LinkErrorsMigration");
             plan.From(string.Empty)
                 .To<InitialMigration>("state-initial")
-                .To<ReferrerMigration>("state-referrer");
+                .To<ReferrerMigration>("state-referrer")
+                .To<UserAgentMigration>("state-userAgent");
 
             var upgrader = new Upgrader(plan);
             upgrader.Execute(_scopeProvider, _migrationBuilder, _keyValueService, _logger);
