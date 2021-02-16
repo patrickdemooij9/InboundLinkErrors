@@ -12,6 +12,8 @@ namespace InboundLinkErrors.Core
         private readonly IRedirectAdapter _redirectService;
         private readonly UmbracoMapper _umbracoMapper;
 
+        private readonly object _lock = new object();
+
         public LinkErrorsService(LinkErrorsRepository linkErrorsRepository, UmbracoMapper umbracoMapper, IRedirectAdapter redirectService)
         {
             _linkErrorsRepository = linkErrorsRepository;
@@ -59,28 +61,31 @@ namespace InboundLinkErrors.Core
         public void TrackMissingLink(string url)
         {
             var formattedUrl = url.ToLowerInvariant();
-            var linkError = GetByUrl(formattedUrl) ?? new LinkErrorDto(formattedUrl);
+            lock (_lock)
+            {
+                var linkError = GetByUrl(formattedUrl) ?? new LinkErrorDto(formattedUrl);
 
-            //If a missing link is deleted, we want to "reset" it.
-            if (linkError.IsDeleted)
-            {
-                linkError.TimesAccessed = 1;
-                linkError.IsDeleted = false;
-            }
-            else
-            {
-                linkError.TimesAccessed++;
-            }
+                //If a missing link is deleted, we want to "reset" it.
+                if (linkError.IsDeleted)
+                {
+                    linkError.TimesAccessed = 1;
+                    linkError.IsDeleted = false;
+                }
+                else
+                {
+                    linkError.TimesAccessed++;
+                }
 
-            linkError.LastAccessedTime = DateTime.UtcNow;
+                linkError.LastAccessedTime = DateTime.UtcNow;
 
-            if (linkError.Id == 0)
-            {
-                Add(linkError);
-            }
-            else
-            {
-                Update(linkError);
+                if (linkError.Id == 0)
+                {
+                    Add(linkError);
+                }
+                else
+                {
+                    Update(linkError);
+                }
             }
         }
 
