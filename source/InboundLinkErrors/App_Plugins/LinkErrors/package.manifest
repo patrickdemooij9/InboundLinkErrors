@@ -1,7 +1,8 @@
 {
 	javascript: [
 		'~/App_Plugins/LinkErrors/assets/scripts/app.js',
-		'~/App_Plugins/LinkErrors/assets/scripts/vendors.min.js'
+		'~/App_Plugins/LinkErrors/assets/scripts/vendors.min.js',
+        '~/App_Plugins/LinkErrors/assets/scripts/createRedirect.controller.js'
 	],
 	css: [
 		'~/App_Plugins/LinkErrors/assets/styles/styles.min.css',

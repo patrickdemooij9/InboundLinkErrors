@@ -1,6 +1,8 @@
-﻿using InboundLinkErrors.Core.Interfaces;
+using InboundLinkErrors.Core.Interfaces;
 using SimpleRedirects.Core;
 using System.Net;
+using Umbraco.Core.Models.PublishedContent;
+using Umbraco.Web;
 
 namespace InboundLinkErrors.SimpleRedirects.Core
 {
@@ -13,9 +15,9 @@ namespace InboundLinkErrors.SimpleRedirects.Core
             _redirectRepository = redirectRepository;
         }
 
-        public void AddRedirect(string fromUrl, string toUrl)
+        public void AddRedirect(string fromUrl, IPublishedContent toNode, string culture)
         {
-            _redirectRepository.AddRedirect(false, fromUrl, toUrl, (int)HttpStatusCode.MovedPermanently, string.Empty);
+            _redirectRepository.AddRedirect(false, fromUrl, toNode.Url(culture), (int)HttpStatusCode.MovedPermanently, string.Empty);
         }
     }
 }

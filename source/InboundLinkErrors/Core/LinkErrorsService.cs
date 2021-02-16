@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using InboundLinkErrors.Core.Interfaces;
 using InboundLinkErrors.Core.Models;
 using Umbraco.Core.Mapping;
+using Umbraco.Core.Models.PublishedContent;
 
 namespace InboundLinkErrors.Core
 {
@@ -89,10 +90,10 @@ namespace InboundLinkErrors.Core
             }
         }
 
-        public void SetRedirect(int linkErrorId, string urlTo)
+        public void SetRedirect(int linkErrorId, IPublishedContent nodeTo, string culture)
         {
             var linkError = Get(linkErrorId);
-            _redirectService.AddRedirect(linkError.Url, urlTo);
+            _redirectService.AddRedirect(linkError.Url, nodeTo, culture);
             Delete(linkErrorId);
         }
     }
