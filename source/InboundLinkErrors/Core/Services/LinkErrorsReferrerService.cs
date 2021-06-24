@@ -24,7 +24,7 @@ namespace InboundLinkErrors.Core.Services
         {
             var cleanedReferrer = referrer.ToLowerInvariant().Trim().TrimEnd('/');
 
-            var entity = _repository.Get(linkErrorId, cleanedReferrer) ?? _repository.Add(new LinkErrorReferrerEntity {LinkErrorId = linkErrorId, Referrer = cleanedReferrer, LastAccessedTime = DateTime.UtcNow});
+            var entity = _repository.Get(linkErrorId, cleanedReferrer) ?? _repository.Add(new LinkErrorReferrerEntity { LinkErrorId = linkErrorId, Referrer = cleanedReferrer, LastAccessedTime = DateTime.UtcNow });
 
             entity.VisitCount++;
             entity.LastAccessedTime = DateTime.UtcNow;

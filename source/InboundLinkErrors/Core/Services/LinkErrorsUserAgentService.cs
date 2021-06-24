@@ -25,7 +25,9 @@ namespace InboundLinkErrors.Core.Services
             var cleanedUserAgent = userAgent.ToLowerInvariant().Trim();
             var entity = _repository.Get(linkErrorId, userAgent) ?? _repository.Add(new LinkErrorUserAgentEntity
             {
-                LinkErrorId = linkErrorId, UserAgent = cleanedUserAgent, LastAccessedTime = DateTime.UtcNow
+                LinkErrorId = linkErrorId,
+                UserAgent = cleanedUserAgent,
+                LastAccessedTime = DateTime.UtcNow
             });
 
             entity.VisitCount++;
