@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<language alias="en" intName="English (UK)" localName="English (UK)" lcid="" culture="en-GB">
+<language>
     <area alias="dashboardTabs">
         <key alias="linkErrorsDashboard">Inbound Errors</key>
     </area>

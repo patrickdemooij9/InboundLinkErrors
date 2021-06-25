@@ -26,7 +26,7 @@ namespace InboundLinkErrors.Core.Services
 
             var entity = _repository.Get(linkErrorId, cleanedReferrer) ?? _repository.Add(new LinkErrorReferrerEntity { LinkErrorId = linkErrorId, Referrer = cleanedReferrer, LastAccessedTime = DateTime.UtcNow });
 
-            entity.VisitCount++;
+            //entity.VisitCount++;
             entity.LastAccessedTime = DateTime.UtcNow;
 
             _repository.Update(entity);

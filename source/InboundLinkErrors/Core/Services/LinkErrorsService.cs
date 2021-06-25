@@ -87,12 +87,12 @@ namespace InboundLinkErrors.Core.Services
 
             if (!string.IsNullOrWhiteSpace(request.UrlReferrer?.AbsoluteUri))
             {
-                _linkErrorsReferrerService.TrackReferrer(request.UrlReferrer.AbsoluteUri, linkError.Id);
+                //_linkErrorsReferrerService.TrackReferrer(request.UrlReferrer.AbsoluteUri, linkError.Id);
             }
 
             if (!string.IsNullOrWhiteSpace(request.UserAgent))
             {
-                _linkErrorsUserAgentService.TrackUserAgent(request.UserAgent, linkError.Id);
+                //_linkErrorsUserAgentService.TrackUserAgent(request.UserAgent, linkError.Id);
             }
         }
 

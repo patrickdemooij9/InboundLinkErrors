@@ -19,9 +19,6 @@ namespace InboundLinkErrors.Core.Models.Data
         [Column("UserAgent")]
         public string UserAgent { get; set; }
 
-        [Column("VisitCount")]
-        public int VisitCount { get; set; }
-
         [Column("LastAccessedTime")]
         public DateTime LastAccessedTime { get; set; }
     }

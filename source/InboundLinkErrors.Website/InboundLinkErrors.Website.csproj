@@ -397,7 +397,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Plugins\LinkErrors\app.html" />
-    <Content Include="App_Plugins\LinkErrors\assets\lang\en.xml" />
+    <Content Include="App_Plugins\LinkErrors\assets\lang\en-US.xml" />
     <Content Include="App_Plugins\LinkErrors\assets\scripts\app.js" />
     <Content Include="App_Plugins\LinkErrors\assets\scripts\createRedirect.controller.js" />
     <Content Include="App_Plugins\LinkErrors\assets\scripts\vendors.min.js" />
@@ -467,6 +467,12 @@
   <ItemGroup>
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.2.6.1\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.2.6.1\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\InboundLinkErrors\InboundLinkErrors.csproj">
+      <Project>{2e1c37ee-8462-48e2-8d49-e40d2a5d32ec}</Project>
+      <Name>InboundLinkErrors</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

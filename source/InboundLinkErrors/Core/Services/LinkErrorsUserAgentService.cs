@@ -30,7 +30,7 @@ namespace InboundLinkErrors.Core.Services
                 LastAccessedTime = DateTime.UtcNow
             });
 
-            entity.VisitCount++;
+            //entity.VisitCount++;
             entity.LastAccessedTime = DateTime.UtcNow;
 
             _repository.Update(entity);

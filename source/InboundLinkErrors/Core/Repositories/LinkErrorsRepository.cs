@@ -79,6 +79,9 @@ namespace InboundLinkErrors.Core.Repositories
         private Sql<ISqlContext> GetBaseQuery()
         {
             return _scopeProvider.SqlContext.Sql()
+                .SelectAll()
+                .From<LinkErrorEntity>();
+            return _scopeProvider.SqlContext.Sql()
                 .Select("InboundLinkErrors.*, InboundLinkErrorReferrers.Referrer as 'LatestReferrer', InboundLinkErrorUserAgent.UserAgent as 'LatestUserAgent'")
                 .From<LinkErrorEntity>()
                 .LeftJoin<LinkErrorReferrerEntity>()

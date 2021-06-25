@@ -20,9 +20,6 @@ namespace InboundLinkErrors.Core.Models.Data
         [Column("Referrer")]
         public string Referrer { get; set; }
 
-        [Column("VisitCount")]
-        public int VisitCount { get; set; }
-
         [Column("LastAccessedTime")]
         public DateTime LastAccessedTime { get; set; }
     }

@@ -44,7 +44,6 @@ namespace InboundLinkErrors.Core
                 {
                     target.Id = source.Id;
                     target.Referrer = source.Referrer;
-                    target.VisitCount = source.VisitCount;
                 });
 
             mapper.Define<LinkErrorReferrerDto, LinkErrorReferrerEntity>(
@@ -53,7 +52,6 @@ namespace InboundLinkErrors.Core
                 {
                     target.Id = source.Id;
                     target.Referrer = source.Referrer;
-                    target.VisitCount = source.VisitCount;
                 });
 
             mapper.Define<LinkErrorUserAgentEntity, LinkErrorUserAgentDto>(
@@ -62,7 +60,6 @@ namespace InboundLinkErrors.Core
                 {
                     target.Id = source.Id;
                     target.UserAgent = source.UserAgent;
-                    target.VisitCount = source.VisitCount;
                 });
 
             mapper.Define<LinkErrorUserAgentDto, LinkErrorUserAgentEntity>(
@@ -71,7 +68,6 @@ namespace InboundLinkErrors.Core
                 {
                     target.Id = source.Id;
                     target.UserAgent = source.UserAgent;
-                    target.VisitCount = source.VisitCount;
                 });
         }
     }
