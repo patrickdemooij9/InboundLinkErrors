@@ -73,15 +73,15 @@ namespace InboundLinkErrors.Core.Services
             //If a missing link is deleted, we want to "reset" it.
             if (linkError.IsDeleted)
             {
-                linkError.TimesAccessed = 1;
+                //linkError.TimesAccessed = 1;
                 linkError.IsDeleted = false;
             }
             else
             {
-                linkError.TimesAccessed++;
+                //linkError.TimesAccessed++;
             }
 
-            linkError.LastAccessedTime = DateTime.UtcNow;
+            //linkError.LastAccessedTime = DateTime.UtcNow;
 
             linkError = linkError.Id == 0 ? Add(linkError) : Update(linkError);
 

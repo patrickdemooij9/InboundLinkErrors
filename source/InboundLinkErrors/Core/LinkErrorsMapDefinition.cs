@@ -21,8 +21,6 @@ namespace InboundLinkErrors.Core
                     target.Id = source.Id;
                     target.IsHidden = source.IsHidden;
                     target.IsDeleted = source.IsDeleted;
-                    target.TimesAccessed = source.TimesAccessed;
-                    target.LastAccessedTime = source.LastAccessedTime;
                 });
 
             mapper.Define<LinkErrorDto, LinkErrorEntity>(
@@ -33,8 +31,6 @@ namespace InboundLinkErrors.Core
                     target.IsHidden = source.IsHidden;
                     target.IsDeleted = source.IsDeleted;
                     target.Url = source.Url;
-                    target.TimesAccessed = source.TimesAccessed;
-                    target.LastAccessedTime = source.LastAccessedTime;
                 });
 
 

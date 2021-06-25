@@ -29,7 +29,8 @@ namespace InboundLinkErrors.Core.Components
             plan.From(string.Empty)
                 .To<InitialMigration>("state-initial")
                 .To<ReferrerMigration>("state-referrer")
-                .To<UserAgentMigration>("state-userAgent");
+                .To<UserAgentMigration>("state-userAgent")
+                .To<BatchingMigration>("state-batching");
 
             var upgrader = new Upgrader(plan);
             upgrader.Execute(_scopeProvider, _migrationBuilder, _keyValueService, _logger);

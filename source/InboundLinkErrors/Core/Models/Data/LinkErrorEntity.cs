@@ -21,17 +21,5 @@ namespace InboundLinkErrors.Core.Models.Data
 
         [Column("IsDeleted")]
         public bool IsDeleted { get; set; }
-
-        [Column("TimesAccessed")]
-        public int TimesAccessed { get; set; }
-
-        [Column("LastTimeAccessed")]
-        public DateTime LastAccessedTime { get; set; }
-
-        [ResultColumn]
-        public string LatestReferrer { get; }
-
-        [ResultColumn]
-        public string LatestUserAgent { get; }
     }
 }
