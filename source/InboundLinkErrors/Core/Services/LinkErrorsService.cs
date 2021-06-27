@@ -1,41 +1,46 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Web;
 using InboundLinkErrors.Core.Interfaces;
-using InboundLinkErrors.Core.Models;
-using InboundLinkErrors.Core.Models.Data;
 using InboundLinkErrors.Core.Models.Dto;
 using InboundLinkErrors.Core.Repositories;
-using Umbraco.Core.Mapping;
+using Umbraco.Core;
 using Umbraco.Core.Models.PublishedContent;
 
 namespace InboundLinkErrors.Core.Services
 {
     public class LinkErrorsService
     {
+        private readonly object _linkErrorLock = new object();
+        private readonly object _linkViewLock = new object();
+        private ConcurrentDictionary<string, LinkErrorDto> _itemsToSync;
+
         private readonly LinkErrorsRepository _linkErrorsRepository;
         private readonly IRedirectAdapter _redirectService;
-        private readonly UmbracoMapper _umbracoMapper;
         private readonly LinkErrorsReferrerService _linkErrorsReferrerService;
         private readonly LinkErrorsUserAgentService _linkErrorsUserAgentService;
 
-        public LinkErrorsService(LinkErrorsRepository linkErrorsRepository, UmbracoMapper umbracoMapper, IRedirectAdapter redirectService, LinkErrorsReferrerService linkErrorsReferrerService, LinkErrorsUserAgentService linkErrorsUserAgentService)
+        public LinkErrorsService(LinkErrorsRepository linkErrorsRepository, IRedirectAdapter redirectService, LinkErrorsReferrerService linkErrorsReferrerService, LinkErrorsUserAgentService linkErrorsUserAgentService)
         {
             _linkErrorsRepository = linkErrorsRepository;
             _redirectService = redirectService;
-            _umbracoMapper = umbracoMapper;
             _linkErrorsReferrerService = linkErrorsReferrerService;
             _linkErrorsUserAgentService = linkErrorsUserAgentService;
+
+            _itemsToSync = new ConcurrentDictionary<string, LinkErrorDto>();
         }
 
         public LinkErrorDto Add(LinkErrorDto model)
         {
-            return _umbracoMapper.Map<LinkErrorEntity, LinkErrorDto>(_linkErrorsRepository.Add(_umbracoMapper.Map<LinkErrorDto, LinkErrorEntity>(model)));
+            return _linkErrorsRepository.Add(model);
         }
 
         public LinkErrorDto Update(LinkErrorDto model)
         {
-            return _umbracoMapper.Map<LinkErrorEntity, LinkErrorDto>(_linkErrorsRepository.Update(_umbracoMapper.Map<LinkErrorDto, LinkErrorEntity>(model)));
+            return _linkErrorsRepository.Update(model);
         }
 
         public void Delete(int id)
@@ -45,17 +50,17 @@ namespace InboundLinkErrors.Core.Services
 
         public LinkErrorDto Get(int id)
         {
-            return _umbracoMapper.Map<LinkErrorEntity, LinkErrorDto>(_linkErrorsRepository.Get(id));
+            return _linkErrorsRepository.Get(id);
         }
 
         public LinkErrorDto GetByUrl(string url)
         {
-            return _umbracoMapper.Map<LinkErrorEntity, LinkErrorDto>(_linkErrorsRepository.GetByUrl(url));
+            return _linkErrorsRepository.GetByUrl(url);
         }
 
         public IEnumerable<LinkErrorDto> GetAll()
         {
-            return _umbracoMapper.MapEnumerable<LinkErrorEntity, LinkErrorDto>(_linkErrorsRepository.GetAll());
+            return _linkErrorsRepository.GetAll();
         }
 
         public void ToggleHide(int id, bool toggle)
@@ -67,23 +72,25 @@ namespace InboundLinkErrors.Core.Services
 
         public void TrackMissingLink(HttpRequest request)
         {
-            var formattedUrl = request.Url.AbsoluteUri.ToLowerInvariant();
-            var linkError = GetByUrl(formattedUrl) ?? new LinkErrorDto(formattedUrl);
+            var formattedUrl = request.Url.AbsoluteUri.ToLowerInvariant().TrimEnd("/");
+            var linkError = GetLinkErrorByUrl(formattedUrl);
+            var todayView = GetCurrentView(linkError);
 
+            //TODO: Remove the IsDeleted logic. Just delete it
             //If a missing link is deleted, we want to "reset" it.
-            if (linkError.IsDeleted)
+            /*if (linkError.IsDeleted)
             {
-                //linkError.TimesAccessed = 1;
+                todayView.VisitCount = 1;
                 linkError.IsDeleted = false;
             }
             else
             {
-                //linkError.TimesAccessed++;
-            }
+                Interlocked.Increment(ref todayView.VisitCount);
+            }*/
+
+            todayView.Increment();
 
             //linkError.LastAccessedTime = DateTime.UtcNow;
-
-            linkError = linkError.Id == 0 ? Add(linkError) : Update(linkError);
 
             if (!string.IsNullOrWhiteSpace(request.UrlReferrer?.AbsoluteUri))
             {
@@ -101,6 +108,56 @@ namespace InboundLinkErrors.Core.Services
             var linkError = Get(linkErrorId);
             _redirectService.AddRedirect(linkError.Url, nodeTo, culture);
             Delete(linkErrorId);
+        }
+
+        public void SyncToDatabase()
+        {
+            var copyItems = new ConcurrentDictionary<string, LinkErrorDto>(_itemsToSync);
+            _itemsToSync.Clear();
+
+            foreach (var (_, value) in copyItems)
+            {
+                if (value.Id == 0)
+                    _linkErrorsRepository.Add(value);
+                else
+                    _linkErrorsRepository.Update(value);
+            }
+        }
+
+        private LinkErrorDto GetLinkErrorByUrl(string url)
+        {
+            if (_itemsToSync.ContainsKey(url))
+                return _itemsToSync[url];
+
+            lock (_linkErrorLock)
+            {
+                if (_itemsToSync.ContainsKey(url))
+                    return _itemsToSync[url];
+
+                var model = _linkErrorsRepository.GetByUrl(url) ?? new LinkErrorDto(url);
+
+                _itemsToSync.TryAdd(url, model);
+                return _itemsToSync[url];
+            }
+        }
+
+        private LinkErrorViewDto GetCurrentView(LinkErrorDto model)
+        {
+            var currentView = model.Views.FirstOrDefault(it => it.Date == DateTime.UtcNow.Date);
+            if (currentView != null)
+                return currentView;
+
+            lock (_linkViewLock)
+            {
+                currentView = model.Views.FirstOrDefault(it => it.Date == DateTime.UtcNow.Date);
+                if (currentView != null)
+                    return currentView;
+
+                currentView = new LinkErrorViewDto(DateTime.UtcNow.Date);
+                model.Views.Add(currentView);
+
+                return currentView;
+            }
         }
     }
 }

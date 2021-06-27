@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using InboundLinkErrors.Core.Models;
 using InboundLinkErrors.Core.Models.Data;
+using InboundLinkErrors.Core.Models.Dto;
 using NPoco;
 using Umbraco.Core.Logging;
+using Umbraco.Core.Mapping;
 using Umbraco.Core.Persistence;
 using Umbraco.Core.Scoping;
 
@@ -11,59 +13,63 @@ namespace InboundLinkErrors.Core.Repositories
     public class LinkErrorsRepository
     {
         private readonly IScopeProvider _scopeProvider;
+        private readonly UmbracoMapper _umbracoMapper;
 
-        public LinkErrorsRepository(IScopeProvider scopeProvider)
+        public LinkErrorsRepository(IScopeProvider scopeProvider, UmbracoMapper umbracoMapper)
         {
             _scopeProvider = scopeProvider;
+            _umbracoMapper = umbracoMapper;
         }
 
-        public LinkErrorEntity Add(LinkErrorEntity entity)
+        public LinkErrorDto Add(LinkErrorDto model)
         {
+            var entity = _umbracoMapper.Map<LinkErrorDto, LinkErrorEntity>(model);
             using (var scope = _scopeProvider.CreateScope())
             {
                 scope.Database.Insert(entity);
                 scope.Complete();
             }
 
-            return entity;
+            return Get(entity.Id);
         }
 
-        public LinkErrorEntity Update(LinkErrorEntity entity)
+        public LinkErrorDto Update(LinkErrorDto model)
         {
+            var entity = _umbracoMapper.Map<LinkErrorDto, LinkErrorEntity>(model);
             using (var scope = _scopeProvider.CreateScope())
             {
                 scope.Database.Update(entity);
                 scope.Complete();
             }
 
-            return entity;
+            return Get(entity.Id);
         }
 
-        public void Delete(LinkErrorEntity entity)
+        public void Delete(LinkErrorDto entity)
         {
             entity.IsDeleted = true;
             Update(entity);
         }
 
-        public LinkErrorEntity Get(int id)
+        public LinkErrorDto Get(int id)
         {
             using (var scope = _scopeProvider.CreateScope())
             {
-                return scope.Database.SingleById<LinkErrorEntity>(id);
+                return _umbracoMapper.Map<LinkErrorEntity, LinkErrorDto>(scope.Database.SingleById<LinkErrorEntity>(id));
             }
         }
 
-        public LinkErrorEntity GetByUrl(string url)
+        public LinkErrorDto GetByUrl(string url)
         {
             using (var scope = _scopeProvider.CreateScope())
             {
                 var sql = GetBaseQuery()
                     .Where<LinkErrorEntity>(error => error.Url.Equals(url));
-                return scope.Database.SingleOrDefault<LinkErrorEntity>(sql);
+                return _umbracoMapper.Map<LinkErrorEntity, LinkErrorDto>(scope.Database.SingleOrDefault<LinkErrorEntity>(sql));
             }
         }
 
-        public IEnumerable<LinkErrorEntity> GetAll(bool includeDeleted = false)
+        public IEnumerable<LinkErrorDto> GetAll(bool includeDeleted = false)
         {
             using (var scope = _scopeProvider.CreateScope())
             {
@@ -72,7 +78,7 @@ namespace InboundLinkErrors.Core.Repositories
                 {
                     sql = sql.Where<LinkErrorEntity>(it => !it.IsDeleted);
                 }
-                return scope.Database.Fetch<LinkErrorEntity>(sql);
+                return _umbracoMapper.MapEnumerable<LinkErrorEntity, LinkErrorDto>(scope.Database.Fetch<LinkErrorEntity>(sql));
             }
         }
 
