@@ -30,7 +30,8 @@ namespace InboundLinkErrors.Core
 
             if (application.Response.StatusCode != (int)HttpStatusCode.NotFound) return;
 
-            _linkErrorsService.TrackMissingLink(application.Request);
+            var request = application.Request;
+            _linkErrorsService.TrackMissingLink(request.Url.AbsoluteUri, request.UrlReferrer?.AbsoluteUri, request.UserAgent);
         }
     }
 }

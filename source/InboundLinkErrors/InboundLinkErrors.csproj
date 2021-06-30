@@ -15,7 +15,7 @@
 
     <ItemGroup>
       <None Remove="App_Plugins\LinkErrors\app.html" />
-      <None Remove="App_Plugins\LinkErrors\assets\lang\en.xml" />
+      <None Remove="App_Plugins\LinkErrors\lang\en.xml" />
       <None Remove="App_Plugins\LinkErrors\assets\scripts\app.js" />
       <None Remove="App_Plugins\LinkErrors\assets\scripts\createRedirect.controller.js" />
       <None Remove="App_Plugins\LinkErrors\assets\scripts\vendors.min.js" />
@@ -27,7 +27,7 @@
 
     <ItemGroup>
         <Content Include="App_Plugins\LinkErrors\app.html" />
-        <Content Include="App_Plugins\LinkErrors\assets\lang\en.xml" />
+        <Content Include="App_Plugins\LinkErrors\lang\en.xml" />
         <Content Include="App_Plugins\LinkErrors\assets\scripts\app.js" />
         <Content Include="App_Plugins\LinkErrors\assets\scripts\createRedirect.controller.js" />
         <Content Include="App_Plugins\LinkErrors\assets\scripts\vendors.min.js" />

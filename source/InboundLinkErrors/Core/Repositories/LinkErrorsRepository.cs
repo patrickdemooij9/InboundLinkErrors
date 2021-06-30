@@ -1,16 +1,15 @@
 using System.Collections.Generic;
-using InboundLinkErrors.Core.Models;
+using InboundLinkErrors.Core.Interfaces;
 using InboundLinkErrors.Core.Models.Data;
 using InboundLinkErrors.Core.Models.Dto;
 using NPoco;
-using Umbraco.Core.Logging;
 using Umbraco.Core.Mapping;
 using Umbraco.Core.Persistence;
 using Umbraco.Core.Scoping;
 
 namespace InboundLinkErrors.Core.Repositories
 {
-    public class LinkErrorsRepository
+    public class LinkErrorsRepository : ILinkErrorsRepository
     {
         private readonly IScopeProvider _scopeProvider;
         private readonly UmbracoMapper _umbracoMapper;
@@ -43,6 +42,21 @@ namespace InboundLinkErrors.Core.Repositories
             }
 
             return Get(entity.Id);
+        }
+
+        public IEnumerable<LinkErrorDto> UpdateOrAdd(IEnumerable<LinkErrorDto> models)
+        {
+            //Make sure that we make a scope here so it's all bundled in one transaction
+            using (var scope = _scopeProvider.CreateScope())
+            {
+                foreach (var model in models)
+                {
+                    if (model.Id == 0)
+                        yield return Add(model);
+                    else
+                        yield return Update(model);
+                }
+            }
         }
 
         public void Delete(LinkErrorDto entity)

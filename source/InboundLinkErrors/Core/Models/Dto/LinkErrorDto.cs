@@ -2,6 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using InboundLinkErrors.Core.Models.Data;
 
 namespace InboundLinkErrors.Core.Models.Dto
@@ -18,6 +19,7 @@ namespace InboundLinkErrors.Core.Models.Dto
         public ConcurrentBag<LinkErrorViewDto> Views { get; set; }
 
         public bool IsMedia => Path.HasExtension(Url);
+        public int TotalVisits => Views.Sum(it => it.VisitCount);
 
         public LinkErrorDto(string url)
         {

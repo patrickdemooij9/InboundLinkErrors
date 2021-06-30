@@ -16,19 +16,15 @@ namespace InboundLinkErrors.Core.Services
     {
         private readonly object _linkErrorLock = new object();
         private readonly object _linkViewLock = new object();
-        private ConcurrentDictionary<string, LinkErrorDto> _itemsToSync;
+        private readonly ConcurrentDictionary<string, LinkErrorDto> _itemsToSync;
 
-        private readonly LinkErrorsRepository _linkErrorsRepository;
+        private readonly ILinkErrorsRepository _linkErrorsRepository;
         private readonly IRedirectAdapter _redirectService;
-        private readonly LinkErrorsReferrerService _linkErrorsReferrerService;
-        private readonly LinkErrorsUserAgentService _linkErrorsUserAgentService;
 
-        public LinkErrorsService(LinkErrorsRepository linkErrorsRepository, IRedirectAdapter redirectService, LinkErrorsReferrerService linkErrorsReferrerService, LinkErrorsUserAgentService linkErrorsUserAgentService)
+        public LinkErrorsService(ILinkErrorsRepository linkErrorsRepository, IRedirectAdapter redirectService)
         {
             _linkErrorsRepository = linkErrorsRepository;
             _redirectService = redirectService;
-            _linkErrorsReferrerService = linkErrorsReferrerService;
-            _linkErrorsUserAgentService = linkErrorsUserAgentService;
 
             _itemsToSync = new ConcurrentDictionary<string, LinkErrorDto>();
         }
@@ -70,9 +66,9 @@ namespace InboundLinkErrors.Core.Services
             Update(dto);
         }
 
-        public void TrackMissingLink(HttpRequest request)
+        public void TrackMissingLink(string requestUrl, string referrer = "", string userAgent = "")
         {
-            var formattedUrl = request.Url.AbsoluteUri.ToLowerInvariant().TrimEnd("/");
+            var formattedUrl = requestUrl.ToLowerInvariant().TrimEnd("/");
             var linkError = GetLinkErrorByUrl(formattedUrl);
             var todayView = GetCurrentView(linkError);
 
@@ -92,12 +88,12 @@ namespace InboundLinkErrors.Core.Services
 
             //linkError.LastAccessedTime = DateTime.UtcNow;
 
-            if (!string.IsNullOrWhiteSpace(request.UrlReferrer?.AbsoluteUri))
+            if (!string.IsNullOrWhiteSpace(referrer))
             {
                 //_linkErrorsReferrerService.TrackReferrer(request.UrlReferrer.AbsoluteUri, linkError.Id);
             }
 
-            if (!string.IsNullOrWhiteSpace(request.UserAgent))
+            if (!string.IsNullOrWhiteSpace(userAgent))
             {
                 //_linkErrorsUserAgentService.TrackUserAgent(request.UserAgent, linkError.Id);
             }
@@ -112,16 +108,12 @@ namespace InboundLinkErrors.Core.Services
 
         public void SyncToDatabase()
         {
-            var copyItems = new ConcurrentDictionary<string, LinkErrorDto>(_itemsToSync);
-            _itemsToSync.Clear();
+            if (_itemsToSync.Count == 0)
+                return;
 
-            foreach (var (_, value) in copyItems)
-            {
-                if (value.Id == 0)
-                    _linkErrorsRepository.Add(value);
-                else
-                    _linkErrorsRepository.Update(value);
-            }
+            //TODO: Should we lock here?
+            _linkErrorsRepository.UpdateOrAdd(_itemsToSync.Values);
+            _itemsToSync.Clear();
         }
 
         private LinkErrorDto GetLinkErrorByUrl(string url)
