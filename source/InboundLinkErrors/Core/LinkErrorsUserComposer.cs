@@ -20,7 +20,7 @@ namespace InboundLinkErrors.Core
             composition.Components().Append<DatabaseUpgradeComponent>();
             composition.Components().Append<LinkErrorsDatabaseSyncComponent>();
 
-            composition.Register<LinkErrorsRepository>(Lifetime.Request);
+            composition.Register<ILinkErrorsRepository, LinkErrorsRepository>(Lifetime.Request);
             composition.Register<LinkErrorsService>(Lifetime.Singleton);
             composition.Register<LinkErrorsReferrerRepository>(Lifetime.Request);
             composition.Register<LinkErrorsReferrerService>(Lifetime.Request);
