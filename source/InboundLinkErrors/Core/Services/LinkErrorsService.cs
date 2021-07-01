@@ -12,7 +12,7 @@ using Umbraco.Core.Models.PublishedContent;
 
 namespace InboundLinkErrors.Core.Services
 {
-    public class LinkErrorsService
+    public class LinkErrorsService : ILinkErrorsService
     {
         private readonly object _linkErrorLock = new object();
         private readonly object _linkViewLock = new object();
@@ -47,6 +47,11 @@ namespace InboundLinkErrors.Core.Services
         public LinkErrorDto Get(int id)
         {
             return _linkErrorsRepository.Get(id);
+        }
+
+        public IEnumerable<LinkErrorDto> GetByUrl(params string[] urls)
+        {
+            throw new NotImplementedException();
         }
 
         public LinkErrorDto GetByUrl(string url)

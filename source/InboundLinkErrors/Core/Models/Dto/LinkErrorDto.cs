@@ -14,9 +14,9 @@ namespace InboundLinkErrors.Core.Models.Dto
         public bool IsHidden { get; set; }
         public bool IsDeleted { get; set; }
 
-        public Dictionary<string, int> Referrers { get; set; }
-        public Dictionary<string, int> UserAgents { get; set; }
-        public ConcurrentBag<LinkErrorViewDto> Views { get; set; }
+        public List<LinkErrorReferrerDto> Referrers { get; set; }
+        public List<LinkErrorUserAgentDto> UserAgents { get; set; }
+        public List<LinkErrorViewDto> Views { get; set; }
 
         public bool IsMedia => Path.HasExtension(Url);
         public int TotalVisits => Views.Sum(it => it.VisitCount);
@@ -24,7 +24,9 @@ namespace InboundLinkErrors.Core.Models.Dto
         public LinkErrorDto(string url)
         {
             Url = url;
-            Views = new ConcurrentBag<LinkErrorViewDto>();
+            Referrers = new List<LinkErrorReferrerDto>();
+            UserAgents = new List<LinkErrorUserAgentDto>();
+            Views = new List<LinkErrorViewDto>();
         }
     }
 }
