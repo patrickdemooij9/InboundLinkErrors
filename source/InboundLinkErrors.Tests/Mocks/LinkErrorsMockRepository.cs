@@ -49,6 +49,11 @@ namespace InboundLinkErrors.Tests.Mocks
             return Data.FirstOrDefault(it => it.Id == id);
         }
 
+        public IEnumerable<LinkErrorDto> GetByUrl(params string[] urls)
+        {
+            return Data.Where(it => urls.Contains(it.Url));
+        }
+
         public LinkErrorDto GetByUrl(string url)
         {
             return Data.FirstOrDefault(it => it.Url == url);

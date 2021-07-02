@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using InboundLinkErrors.Core.Interfaces;
 using InboundLinkErrors.Core.Models.Data;
 using InboundLinkErrors.Core.Models.Dto;
@@ -73,13 +74,13 @@ namespace InboundLinkErrors.Core.Repositories
             }
         }
 
-        public LinkErrorDto GetByUrl(string url)
+        public IEnumerable<LinkErrorDto> GetByUrl(params string[] urls)
         {
             using (var scope = _scopeProvider.CreateScope())
             {
                 var sql = GetBaseQuery()
-                    .Where<LinkErrorEntity>(error => error.Url.Equals(url));
-                return _umbracoMapper.Map<LinkErrorEntity, LinkErrorDto>(scope.Database.SingleOrDefault<LinkErrorEntity>(sql));
+                    .Where<LinkErrorEntity>(error => urls.Contains(error.Url));
+                return _umbracoMapper.MapEnumerable<LinkErrorEntity, LinkErrorDto>(scope.Database.Fetch<LinkErrorEntity>(sql));
             }
         }
 

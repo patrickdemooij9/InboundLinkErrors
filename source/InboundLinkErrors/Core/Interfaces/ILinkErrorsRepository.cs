@@ -10,7 +10,7 @@ namespace InboundLinkErrors.Core.Interfaces
         IEnumerable<LinkErrorDto> UpdateOrAdd(IEnumerable<LinkErrorDto> models);
         void Delete(LinkErrorDto model);
         LinkErrorDto Get(int id);
-        LinkErrorDto GetByUrl(string url);
+        IEnumerable<LinkErrorDto> GetByUrl(params string[] urls);
         IEnumerable<LinkErrorDto> GetAll(bool includeDeleted = false);
     }
 }

@@ -12,7 +12,6 @@ namespace InboundLinkErrors.Core.Interfaces
         LinkErrorDto Get(int id);
         IEnumerable<LinkErrorDto> GetByUrl(params string[] urls);
         IEnumerable<LinkErrorDto> GetAll();
-        void TrackMissingLink(string requestUrl, string referrer = "", string userAgent = "");
         void SetRedirect(int linkErrorId, IPublishedContent nodeTo, string culture);
     }
 }

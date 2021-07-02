@@ -1,17 +1,17 @@
-using InboundLinkErrors.Core.Services;
 using System;
 using System.Net;
 using System.Web;
+using InboundLinkErrors.Core.Processor;
 
 namespace InboundLinkErrors.Core
 {
     public class LinkErrorsInjectedModule : IHttpModule
     {
-        private readonly LinkErrorsService _linkErrorsService;
+        private readonly ILinkErrorsProcessor _processor;
 
-        public LinkErrorsInjectedModule(LinkErrorsService linkErrorsService)
+        public LinkErrorsInjectedModule(ILinkErrorsProcessor processor)
         {
-            _linkErrorsService = linkErrorsService;
+            _processor = processor;
         }
 
         public void Init(HttpApplication context)
@@ -31,7 +31,7 @@ namespace InboundLinkErrors.Core
             if (application.Response.StatusCode != (int)HttpStatusCode.NotFound) return;
 
             var request = application.Request;
-            _linkErrorsService.TrackMissingLink(request.Url.AbsoluteUri, request.UrlReferrer?.AbsoluteUri, request.UserAgent);
+            _processor.AddRequest(request.Url.AbsoluteUri, request.UrlReferrer?.AbsoluteUri, request.UserAgent);
         }
     }
 }

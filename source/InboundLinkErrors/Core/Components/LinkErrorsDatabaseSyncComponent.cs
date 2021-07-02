@@ -1,4 +1,5 @@
-﻿using InboundLinkErrors.Core.Services;
+﻿using InboundLinkErrors.Core.Processor;
+using InboundLinkErrors.Core.Services;
 using InboundLinkErrors.Core.Tasks;
 using Umbraco.Core.Composing;
 using Umbraco.Core.Logging;
@@ -8,13 +9,13 @@ namespace InboundLinkErrors.Core.Components
 {
     public class LinkErrorsDatabaseSyncComponent : IComponent
     {
-        private readonly LinkErrorsService _linkErrorsService;
+        private readonly ILinkErrorsProcessor _processor;
         private readonly ILogger _logger;
         private readonly BackgroundTaskRunner<IBackgroundTask> _syncTask;
 
-        public LinkErrorsDatabaseSyncComponent(ILogger logger, LinkErrorsService linkErrorsService)
+        public LinkErrorsDatabaseSyncComponent(ILogger logger, ILinkErrorsProcessor processor)
         {
-            _linkErrorsService = linkErrorsService;
+            _processor = processor;
             _logger = logger;
 
             _syncTask = new BackgroundTaskRunner<IBackgroundTask>("LinkErrorsDatabaseSync", logger);
@@ -25,7 +26,7 @@ namespace InboundLinkErrors.Core.Components
             var delayBeforeWeStart = 60000; // 60000ms = 1min
             var howOftenWeRepeat = 300000; //300000ms = 5mins
             
-            var task = new LinkErrorsDatabaseSyncTask(_syncTask, delayBeforeWeStart, howOftenWeRepeat, _linkErrorsService, _logger);
+            var task = new LinkErrorsDatabaseSyncTask(_syncTask, delayBeforeWeStart, howOftenWeRepeat, _processor, _logger);
 
             _syncTask.TryAdd(task);
         }

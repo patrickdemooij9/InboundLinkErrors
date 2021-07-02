@@ -22,7 +22,7 @@ namespace InboundLinkErrors.Core.Processor
 
         public void AddRequest(string requestUrl, string referrer = "", string userAgent = "")
         {
-            _modelsToProcess.Add(new LinkErrorsProcessModel(requestUrl, referrer, userAgent));
+            _modelsToProcess.Add(new LinkErrorsProcessModel(requestUrl.TrimEnd('/'), referrer, userAgent));
         }
 
         public void ProcessData()
@@ -31,7 +31,7 @@ namespace InboundLinkErrors.Core.Processor
             var models = new ConcurrentBag<LinkErrorsProcessModel>();
             Interlocked.Exchange(ref models, _modelsToProcess);
 
-            var groupedRequests = models.GroupBy(it => it.RequestUrl.Trim()).ToArray();
+            var groupedRequests = models.GroupBy(it => it.RequestUrl).ToArray();
             var linkErrorModels = _linkErrorsService.GetByUrl(groupedRequests.Select(it => it.Key).ToArray()).ToDictionary(it => it.Url, it => it);
             foreach (var model in groupedRequests)
             {
@@ -39,7 +39,12 @@ namespace InboundLinkErrors.Core.Processor
                 var newViews = model.Count();
                 var linkErrorModel = exists ? linkErrorModels[model.Key] : new LinkErrorDto(model.Key);
 
-                var currentView = linkErrorModel.Views.FirstOrDefault(it => it.Date == DateTime.UtcNow.Date) ?? new LinkErrorViewDto(DateTime.UtcNow.Date);
+                var currentView = linkErrorModel.Views.FirstOrDefault(it => it.Date == DateTime.UtcNow.Date);
+                if (currentView is null)
+                {
+                    currentView = new LinkErrorViewDto(DateTime.UtcNow.Date);
+                    linkErrorModel.Views.Add(currentView);
+                }
                 currentView.VisitCount += newViews;
 
                 foreach (var referrer in model.Select(it => it.Referrer).Distinct())

@@ -4,8 +4,6 @@ namespace InboundLinkErrors.Core.Models.Dto
 {
     public class LinkErrorViewDto
     {
-        private int _visitCount;
-
         public DateTime Date { get; }
         public int VisitCount { get; set; }
 
@@ -13,7 +11,7 @@ namespace InboundLinkErrors.Core.Models.Dto
         public LinkErrorViewDto(DateTime date, int visitCount = 0)
         {
             Date = date;
-            _visitCount = visitCount;
+            VisitCount = visitCount;
         }
     }
 }

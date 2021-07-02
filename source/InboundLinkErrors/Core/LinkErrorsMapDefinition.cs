@@ -35,11 +35,10 @@ namespace InboundLinkErrors.Core
 
 
             mapper.Define<LinkErrorReferrerEntity, LinkErrorReferrerDto>(
-                (source, context) => new LinkErrorReferrerDto(),
+                (source, context) => new LinkErrorReferrerDto(source.Referrer),
                 (source, target, context) =>
                 {
                     target.Id = source.Id;
-                    target.Referrer = source.Referrer;
                 });
 
             mapper.Define<LinkErrorReferrerDto, LinkErrorReferrerEntity>(
@@ -51,11 +50,10 @@ namespace InboundLinkErrors.Core
                 });
 
             mapper.Define<LinkErrorUserAgentEntity, LinkErrorUserAgentDto>(
-                (source, context) => new LinkErrorUserAgentDto(),
+                (source, context) => new LinkErrorUserAgentDto(source.UserAgent),
                 (source, target, context) =>
                 {
                     target.Id = source.Id;
-                    target.UserAgent = source.UserAgent;
                 });
 
             mapper.Define<LinkErrorUserAgentDto, LinkErrorUserAgentEntity>(
