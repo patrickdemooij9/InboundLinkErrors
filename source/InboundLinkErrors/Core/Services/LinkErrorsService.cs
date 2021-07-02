@@ -53,13 +53,6 @@ namespace InboundLinkErrors.Core.Services
             return _linkErrorsRepository.GetAll();
         }
 
-        public void ToggleHide(int id, bool toggle)
-        {
-            var dto = Get(id);
-            dto.IsHidden = toggle;
-            Update(dto);
-        }
-
         public void SetRedirect(int linkErrorId, IPublishedContent nodeTo, string culture)
         {
             var linkError = Get(linkErrorId);

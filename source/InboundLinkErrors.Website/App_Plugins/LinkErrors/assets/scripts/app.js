@@ -32,7 +32,7 @@ angular.module("umbraco").controller("LinkErrorsController", function ($scope, $
             return;
         }
 
-        $scope.linkErrors = response.data;
+        $scope.data = response.data;
         $scope.refreshTable();
     }
 
@@ -46,13 +46,26 @@ angular.module("umbraco").controller("LinkErrorsController", function ($scope, $
                 var selectedCulture = model.selectedCulture.culture;
                 editorService.close();
 
-                LinkErrorsApi.setRedirect(linkError.Id, selectedNodeId, selectedCulture).then($scope.onSetRedirectResponse.bind(this, linkError));
+                LinkErrorsApi.setRedirect(linkError.id, selectedNodeId, selectedCulture).then($scope.onSetRedirectResponse.bind(this, linkError));
             },
             close: function () {
                 editorService.close();
             }
         };
         editorService.open(redirectDialogOptions);
+    }
+
+    $scope.openDetailDialog = function (linkError) {
+        var detailDialogOptions = {
+            title: "Details",
+            view: "/App_Plugins/LinkErrors/assets/views/detail.html",
+            size: "small",
+            linkError: linkError,
+            close: function () {
+                editorService.close();
+            }
+        };
+        editorService.open(detailDialogOptions);
     }
 
     $scope.onSetRedirectResponse = function (linkError, response) {
@@ -66,7 +79,7 @@ angular.module("umbraco").controller("LinkErrorsController", function ($scope, $
 
     $scope.deleteLinkError = function (linkError) {
         if (confirm("Are you sure you want to delete this?")) {
-            LinkErrorsApi.remove(linkError.Id).then($scope.onDeleteLinkResponse.bind(this, linkError));
+            LinkErrorsApi.remove(linkError.id).then($scope.onDeleteLinkResponse.bind(this, linkError));
         }
     }
 
@@ -86,7 +99,7 @@ angular.module("umbraco").controller("LinkErrorsController", function ($scope, $
     }
 
     $scope.toggleHideLinkError = function (linkError, toggle) {
-        LinkErrorsApi.hide(linkError.Id, toggle).then($scope.onHideLinkResponse.bind(this, linkError, toggle));
+        LinkErrorsApi.hide(linkError.id, toggle).then($scope.onHideLinkResponse.bind(this, linkError, toggle));
     }
 
     $scope.onHideLinkResponse = function (linkError, toggle, response) {
@@ -97,7 +110,7 @@ angular.module("umbraco").controller("LinkErrorsController", function ($scope, $
 
         if (response.data.Success) {
             $scope.errorMessage = '';
-            linkError.IsHidden = toggle;
+            linkError.isHidden = toggle;
             $scope.refreshTable();
         } else {
             $scope.errorMessage = response.data.ErrorMessage;
@@ -105,10 +118,10 @@ angular.module("umbraco").controller("LinkErrorsController", function ($scope, $
     }
 
     $scope.removeLinkError = function (linkError) {
-        var index = $scope.linkErrors.indexOf(linkError);
+        var index = $scope.data.items.indexOf(linkError);
         if (index > -1) {
-            $scope.linkErrors.splice(index, 1);
-            $scope.tableParams.total($scope.linkErrors.length);
+            $scope.data.items.splice(index, 1);
+            $scope.tableParams.total($scope.data.items.length);
             $scope.tableParams.reload();
         }
     }
@@ -127,38 +140,38 @@ angular.module("umbraco").controller("LinkErrorsController", function ($scope, $
         },
         data: $scope.initialData
     }, {
-            total: 0,
-            getData: function ($defer, params) {
-                var data = $scope.linkErrors || [];
+        total: 0,
+        getData: function ($defer, params) {
+            var data = $scope.data.items || [];
 
-                var searchTerm = params.filter().Search;
-                var searchedData = searchTerm ?
-                    data.filter(function (linkError) {
-                        return linkError.Url.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
-                    }) : data;
+            var searchTerm = params.filter().Search;
+            var searchedData = searchTerm ?
+                data.filter(function (linkError) {
+                    return linkError.Url.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
+                }) : data;
 
-                var filteredData = $scope.showHidden ? searchedData :
-                    searchedData.filter(function (linkError) {
-                        return !linkError.IsHidden;
-                    });
+            var filteredData = $scope.showHidden ? searchedData :
+                searchedData.filter(function (linkError) {
+                    return !linkError.isHidden;
+                });
 
-                filteredData = $scope.showMedia
-                    ? filteredData
-                    : filteredData.filter(function (linkError) {
-                        return !linkError.IsMedia;
-                    });
+            filteredData = $scope.showMedia
+                ? filteredData
+                : filteredData.filter(function (linkError) {
+                    return !linkError.isMedia;
+                });
 
-                //Are we ordering the results?
-                var orderedData = params.sorting() ?
-                    $filter('orderBy')(filteredData, params.orderBy()) :
-                    filteredData;
+            //Are we ordering the results?
+            var orderedData = params.sorting() ?
+                $filter('orderBy')(filteredData, params.orderBy()) :
+                filteredData;
 
-                //Set totals and page counts
-                params.total(orderedData.length);
-                var pagedResults = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
-                $defer.resolve(pagedResults);
-            }
-        })
+            //Set totals and page counts
+            params.total(orderedData.length);
+            var pagedResults = orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
+            $defer.resolve(pagedResults);
+        }
+    })
 
     /*
     * Initial load function to set loaded state

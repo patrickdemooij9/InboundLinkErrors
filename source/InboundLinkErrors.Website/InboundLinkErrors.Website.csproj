@@ -397,6 +397,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Plugins\LinkErrors\app.html" />
+    <Content Include="App_Plugins\LinkErrors\assets\scripts\detail.controller.js" />
+    <Content Include="App_Plugins\LinkErrors\assets\views\detail.html" />
     <Content Include="App_Plugins\LinkErrors\lang\en-US.xml" />
     <Content Include="App_Plugins\LinkErrors\assets\scripts\app.js" />
     <Content Include="App_Plugins\LinkErrors\assets\scripts\createRedirect.controller.js" />

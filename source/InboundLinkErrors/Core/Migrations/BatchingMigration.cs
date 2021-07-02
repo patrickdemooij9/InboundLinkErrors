@@ -1,4 +1,5 @@
-﻿using InboundLinkErrors.Core.Models.Data;
+﻿using System;
+using InboundLinkErrors.Core.Models.Data;
 using Umbraco.Core.Migrations;
 using Umbraco.Web.Models.ContentEditing;
 
@@ -26,7 +27,7 @@ namespace InboundLinkErrors.Core.Migrations
                     {
                         LinkErrorId = data.Id,
                         VisitCount = data.TimesAccessed,
-                        Date = data.LastTimeAccessed
+                        Date = ((DateTime)data.LastTimeAccessed).Date
                     };
 
                     Database.Insert(viewEntity);

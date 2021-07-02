@@ -27,6 +27,20 @@ namespace InboundLinkErrors.Core.Repositories
             using (var scope = _scopeProvider.CreateScope())
             {
                 scope.Database.Insert(entity);
+
+                foreach (var view in model.Views)
+                {
+                    scope.Database.Insert(_umbracoMapper.Map<LinkErrorViewDto, LinkErrorViewEntity>(view, (context) => context.Items.Add("LinkErrorId", entity.Id)));
+                }
+                foreach (var userAgent in model.UserAgents)
+                {
+                    scope.Database.Insert(_umbracoMapper.Map<LinkErrorUserAgentDto, LinkErrorUserAgentEntity>(userAgent, (context) => context.Items.Add("LinkErrorId", entity.Id)));
+                }
+                foreach (var referrer in model.Referrers)
+                {
+                    scope.Database.Insert(_umbracoMapper.Map<LinkErrorReferrerDto, LinkErrorReferrerEntity>(referrer, (context) => context.Items.Add("LinkErrorId", entity.Id)));
+                }
+
                 scope.Complete();
             }
 
@@ -39,6 +53,29 @@ namespace InboundLinkErrors.Core.Repositories
             using (var scope = _scopeProvider.CreateScope())
             {
                 scope.Database.Update(entity);
+
+                foreach (var view in model.Views.Select(it => _umbracoMapper.Map<LinkErrorViewDto, LinkErrorViewEntity>(it, (context) => context.Items.Add("LinkErrorId", entity.Id))))
+                {
+                    if (scope.Database.Exists<LinkErrorViewEntity>(view))
+                        scope.Database.Update(view);
+                    else
+                        scope.Database.Insert(view);
+                }
+                foreach (var userAgent in model.UserAgents.Select(it => _umbracoMapper.Map<LinkErrorUserAgentDto, LinkErrorUserAgentEntity>(it, (context) => context.Items.Add("LinkErrorId", entity.Id))))
+                {
+                    if (userAgent.Id != 0)
+                        scope.Database.Update(userAgent);
+                    else
+                        scope.Database.Insert(userAgent);
+                }
+                foreach (var referrer in model.Referrers.Select(it => _umbracoMapper.Map<LinkErrorReferrerDto, LinkErrorReferrerEntity>(it, (context) => context.Items.Add("LinkErrorId", entity.Id))))
+                {
+                    if (referrer.Id != 0)
+                        scope.Database.Update(referrer);
+                    else
+                        scope.Database.Insert(referrer);
+                }
+
                 scope.Complete();
             }
 
@@ -60,17 +97,35 @@ namespace InboundLinkErrors.Core.Repositories
             }
         }
 
-        public void Delete(LinkErrorDto entity)
+        public void Delete(LinkErrorDto model)
         {
-            entity.IsDeleted = true;
-            Update(entity);
+            var entity = _umbracoMapper.Map<LinkErrorDto, LinkErrorEntity>(model);
+            using (var scope = _scopeProvider.CreateScope())
+            {
+                scope.Database.Delete(entity);
+
+                foreach (var view in model.Views.Select(it => _umbracoMapper.Map<LinkErrorViewDto, LinkErrorViewEntity>(it, (context) => context.Items.Add("LinkErrorId", entity.Id))))
+                {
+                    scope.Database.Delete(view);
+                }
+                foreach (var userAgent in model.UserAgents.Select(it => _umbracoMapper.Map<LinkErrorUserAgentDto, LinkErrorUserAgentEntity>(it, (context) => context.Items.Add("LinkErrorId", entity.Id))))
+                {
+                    scope.Database.Delete(userAgent);
+                }
+                foreach (var referrer in model.Referrers.Select(it => _umbracoMapper.Map<LinkErrorReferrerDto, LinkErrorReferrerEntity>(it, (context) => context.Items.Add("LinkErrorId", entity.Id))))
+                {
+                    scope.Database.Delete(referrer);
+                }
+
+                scope.Complete();
+            }
         }
 
         public LinkErrorDto Get(int id)
         {
             using (var scope = _scopeProvider.CreateScope())
             {
-                return _umbracoMapper.Map<LinkErrorEntity, LinkErrorDto>(scope.Database.SingleById<LinkErrorEntity>(id));
+                return Map(scope.Database.SingleById<LinkErrorEntity>(id), scope);
             }
         }
 
@@ -80,7 +135,7 @@ namespace InboundLinkErrors.Core.Repositories
             {
                 var sql = GetBaseQuery()
                     .Where<LinkErrorEntity>(error => urls.Contains(error.Url));
-                return _umbracoMapper.MapEnumerable<LinkErrorEntity, LinkErrorDto>(scope.Database.Fetch<LinkErrorEntity>(sql));
+                return scope.Database.Fetch<LinkErrorEntity>(sql).Select(it => Map(it, scope)).ToArray();
             }
         }
 
@@ -93,8 +148,32 @@ namespace InboundLinkErrors.Core.Repositories
                 {
                     sql = sql.Where<LinkErrorEntity>(it => !it.IsDeleted);
                 }
-                return _umbracoMapper.MapEnumerable<LinkErrorEntity, LinkErrorDto>(scope.Database.Fetch<LinkErrorEntity>(sql));
+                return scope.Database.Fetch<LinkErrorEntity>(sql).Select(it => Map(it, scope)).ToArray();
             }
+        }
+
+        private IEnumerable<LinkErrorViewEntity> GetViews(int linkErrorId, IScope scope)
+        {
+            return scope.Database.Fetch<LinkErrorViewEntity>(scope.SqlContext.Sql().SelectAll().From<LinkErrorViewEntity>().Where<LinkErrorViewEntity>(it => it.LinkErrorId == linkErrorId));
+        }
+
+        private IEnumerable<LinkErrorUserAgentEntity> GetUserAgents(int linkErrorId, IScope scope)
+        {
+            return scope.Database.Fetch<LinkErrorUserAgentEntity>(scope.SqlContext.Sql().SelectAll().From<LinkErrorUserAgentEntity>().Where<LinkErrorUserAgentEntity>(it => it.LinkErrorId == linkErrorId));
+        }
+
+        private IEnumerable<LinkErrorReferrerEntity> GetReferrers(int linkErrorId, IScope scope)
+        {
+            return scope.Database.Fetch<LinkErrorReferrerEntity>(scope.SqlContext.Sql().SelectAll().From<LinkErrorReferrerEntity>().Where<LinkErrorReferrerEntity>(it => it.LinkErrorId == linkErrorId));
+        }
+
+        private LinkErrorDto Map(LinkErrorEntity entity, IScope scope)
+        {
+            var model = _umbracoMapper.Map<LinkErrorEntity, LinkErrorDto>(entity);
+            model.Views = _umbracoMapper.MapEnumerable<LinkErrorViewEntity, LinkErrorViewDto>(GetViews(model.Id, scope));
+            model.UserAgents = _umbracoMapper.MapEnumerable<LinkErrorUserAgentEntity, LinkErrorUserAgentDto>(GetUserAgents(model.Id, scope));
+            model.Referrers = _umbracoMapper.MapEnumerable<LinkErrorReferrerEntity, LinkErrorReferrerDto>(GetReferrers(model.Id, scope));
+            return model;
         }
 
         private Sql<ISqlContext> GetBaseQuery()

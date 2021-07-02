@@ -1,7 +1,11 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
+using InboundLinkErrors.Core.Interfaces;
 using InboundLinkErrors.Core.Models;
 using InboundLinkErrors.Core.Models.Dto;
+using InboundLinkErrors.Core.Models.ViewModels;
 using InboundLinkErrors.Core.Services;
 using Umbraco.Web;
 using Umbraco.Web.Mvc;
@@ -12,17 +16,30 @@ namespace InboundLinkErrors.Core
     [PluginController("LinkErrors")]
     public class LinkErrorsApiController : UmbracoAuthorizedApiController
     {
-        private readonly LinkErrorsService _linkErrorsService;
+        private readonly ILinkErrorsService _linkErrorsService;
 
-        public LinkErrorsApiController(LinkErrorsService linkErrorsService)
+        public LinkErrorsApiController(ILinkErrorsService linkErrorsService)
         {
             _linkErrorsService = linkErrorsService;
         }
 
         [HttpGet]
-        public IEnumerable<LinkErrorDto> GetAll()
+        public LinkErrorViewModel GetAll()
         {
-            return _linkErrorsService.GetAll();
+            return new LinkErrorViewModel
+            {
+                Items = _linkErrorsService.GetAll().Select(it => new LinkErrorItemViewModel
+                {
+                    Id = it.Id,
+                    Url = it.Url,
+                    RelativeUrl = new Uri(it.Url).AbsolutePath,
+                    IsMedia = it.IsMedia,
+                    IsHidden = it.IsHidden,
+                    Views = it.Views.ToDictionary(v => v.Date, v => v.VisitCount),
+                    Referrers = it.Referrers.Select(r => r.Referrer).ToArray(),
+                    UserAgents = it.UserAgents.Select(u => u.UserAgent).ToArray()
+                }).ToArray()
+            };
         }
 
         [HttpDelete]
@@ -48,7 +65,12 @@ namespace InboundLinkErrors.Core
         [HttpPost]
         public LinkErrorRequestResponse Hide(int id, bool toggle)
         {
-            _linkErrorsService.ToggleHide(id, toggle);
+            var model = _linkErrorsService.Get(id);
+            if (model is null)
+                return new LinkErrorRequestResponse("Could not find item");
+
+            model.IsHidden = toggle;
+            _linkErrorsService.Update(model);
             return new LinkErrorRequestResponse();
         }
     }

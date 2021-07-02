@@ -1,10 +1,8 @@
-using InboundLinkErrors.Core.Models;
 using InboundLinkErrors.Core.Models.Data;
 using InboundLinkErrors.Core.Models.Dto;
-using InboundLinkErrors.Core.Services;
 using Umbraco.Core.Mapping;
 
-namespace InboundLinkErrors.Core
+namespace InboundLinkErrors.Core.Mappers
 {
     public class LinkErrorsMapDefinition : IMapDefinition
     {

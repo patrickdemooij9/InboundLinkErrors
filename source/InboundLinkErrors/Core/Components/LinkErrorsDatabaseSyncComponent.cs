@@ -24,7 +24,7 @@ namespace InboundLinkErrors.Core.Components
         public void Initialize()
         {
             var delayBeforeWeStart = 60000; // 60000ms = 1min
-            var howOftenWeRepeat = 300000; //300000ms = 5mins
+            var howOftenWeRepeat = 60000; //300000ms = 5mins
             
             var task = new LinkErrorsDatabaseSyncTask(_syncTask, delayBeforeWeStart, howOftenWeRepeat, _processor, _logger);
 
