@@ -22,6 +22,17 @@
       <None Remove="App_Plugins\LinkErrors\assets\styles\styles.min.css" />
       <None Remove="App_Plugins\LinkErrors\assets\styles\vendors.min.css" />
       <None Remove="App_Plugins\LinkErrors\assets\views\createRedirect.html" />
+      <None Remove="App_Plugins\LinkErrors\LinkErrors\app.html" />
+      <None Remove="App_Plugins\LinkErrors\LinkErrors\assets\scripts\app.js" />
+      <None Remove="App_Plugins\LinkErrors\LinkErrors\assets\scripts\createRedirect.controller.js" />
+      <None Remove="App_Plugins\LinkErrors\LinkErrors\assets\scripts\detail.controller.js" />
+      <None Remove="App_Plugins\LinkErrors\LinkErrors\assets\scripts\vendors.min.js" />
+      <None Remove="App_Plugins\LinkErrors\LinkErrors\assets\styles\styles.min.css" />
+      <None Remove="App_Plugins\LinkErrors\LinkErrors\assets\styles\vendors.min.css" />
+      <None Remove="App_Plugins\LinkErrors\LinkErrors\assets\views\createRedirect.html" />
+      <None Remove="App_Plugins\LinkErrors\LinkErrors\assets\views\detail.html" />
+      <None Remove="App_Plugins\LinkErrors\LinkErrors\lang\en-US.xml" />
+      <None Remove="App_Plugins\LinkErrors\LinkErrors\package.manifest" />
       <None Remove="App_Plugins\LinkErrors\package.manifest" />
     </ItemGroup>
 
@@ -34,6 +45,17 @@
         <Content Include="App_Plugins\LinkErrors\assets\styles\styles.min.css" />
         <Content Include="App_Plugins\LinkErrors\assets\styles\vendors.min.css" />
         <Content Include="App_Plugins\LinkErrors\assets\views\createRedirect.html" />
+        <Content Include="App_Plugins\LinkErrors\LinkErrors\app.html" />
+        <Content Include="App_Plugins\LinkErrors\LinkErrors\assets\scripts\app.js" />
+        <Content Include="App_Plugins\LinkErrors\LinkErrors\assets\scripts\createRedirect.controller.js" />
+        <Content Include="App_Plugins\LinkErrors\LinkErrors\assets\scripts\detail.controller.js" />
+        <Content Include="App_Plugins\LinkErrors\LinkErrors\assets\scripts\vendors.min.js" />
+        <Content Include="App_Plugins\LinkErrors\LinkErrors\assets\styles\styles.min.css" />
+        <Content Include="App_Plugins\LinkErrors\LinkErrors\assets\styles\vendors.min.css" />
+        <Content Include="App_Plugins\LinkErrors\LinkErrors\assets\views\createRedirect.html" />
+        <Content Include="App_Plugins\LinkErrors\LinkErrors\assets\views\detail.html" />
+        <Content Include="App_Plugins\LinkErrors\LinkErrors\lang\en-US.xml" />
+        <Content Include="App_Plugins\LinkErrors\LinkErrors\package.manifest" />
         <Content Include="App_Plugins\LinkErrors\package.manifest" />
         <Content Include="web.config.install.xdt" />
         <Content Include="web.config.uninstall.xdt" />

@@ -12,7 +12,6 @@ namespace InboundLinkErrors.Core.Models.Dto
         public int Id { get; set; }
         public string Url { get; }
         public bool IsHidden { get; set; }
-        public bool IsDeleted { get; set; }
 
         public List<LinkErrorReferrerDto> Referrers { get; set; }
         public List<LinkErrorUserAgentDto> UserAgents { get; set; }

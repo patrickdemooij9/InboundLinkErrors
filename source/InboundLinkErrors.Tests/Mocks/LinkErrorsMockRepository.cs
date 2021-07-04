@@ -59,7 +59,7 @@ namespace InboundLinkErrors.Tests.Mocks
             return Data.FirstOrDefault(it => it.Url == url);
         }
 
-        public IEnumerable<LinkErrorDto> GetAll(bool includeDeleted = false)
+        public IEnumerable<LinkErrorDto> GetAll()
         {
             return Data;
         }

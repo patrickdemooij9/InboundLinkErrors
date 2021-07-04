@@ -1,4 +1,5 @@
 using InboundLinkErrors.Core.Components;
+using InboundLinkErrors.Core.ConfigurationProvider;
 using InboundLinkErrors.Core.Interfaces;
 using InboundLinkErrors.Core.Mappers;
 using InboundLinkErrors.Core.Processor;
@@ -25,12 +26,14 @@ namespace InboundLinkErrors.Core
             composition.Dashboards().Add<LinkErrorsDashboard>();
             composition.Components().Append<DatabaseUpgradeComponent>();
             composition.Components().Append<LinkErrorsDatabaseSyncComponent>();
+            composition.Components().Append<LinkErrorsCleanupComponent>();
 
             composition.Register<ILinkErrorsRepository, LinkErrorsRepository>(Lifetime.Request);
             composition.Register<ILinkErrorsProcessor, LinkErrorsProcessor>(Lifetime.Singleton);
             composition.Register<ILinkErrorsService, LinkErrorsService>(Lifetime.Request);
             composition.Register<LinkErrorsInjectedModule>(Lifetime.Request);
             composition.Register<IRedirectAdapter, UmbracoRedirectAdapter>(Lifetime.Request);
+            composition.Register<ILinkErrorConfigurationProvider, LinkErrorConfigurationProvider>(Lifetime.Request);
         }
     }
 }

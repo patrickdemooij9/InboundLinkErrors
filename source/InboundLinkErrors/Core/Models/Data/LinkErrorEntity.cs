@@ -18,8 +18,5 @@ namespace InboundLinkErrors.Core.Models.Data
 
         [Column("IsHidden")]
         public bool IsHidden { get; set; }
-
-        [Column("IsDeleted")]
-        public bool IsDeleted { get; set; }
     }
 }

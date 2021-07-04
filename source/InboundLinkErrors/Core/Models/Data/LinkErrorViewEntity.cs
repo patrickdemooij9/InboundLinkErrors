@@ -11,7 +11,7 @@ namespace InboundLinkErrors.Core.Models.Data
     {
         [Column("LinkErrorId")]
         [PrimaryKeyColumn(AutoIncrement = false, OnColumns = "LinkErrorId, Date")]
-        [ForeignKey(typeof(LinkErrorEntity), Column = "Id", Name = "FK_InboundLinkErrorVisit_InboundLinkError")]
+        [ForeignKey(typeof(LinkErrorEntity), Column = "Id", Name = "FK_InboundLinkErrorView_InboundLinkError")]
         public int LinkErrorId { get; set; }
 
         [Column("Date")]

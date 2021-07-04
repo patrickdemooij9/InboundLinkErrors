@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using InboundLinkErrors.Core.ConfigurationProvider;
 using InboundLinkErrors.Core.Interfaces;
 using InboundLinkErrors.Core.Models;
 using InboundLinkErrors.Core.Models.Dto;
@@ -17,10 +18,12 @@ namespace InboundLinkErrors.Core
     public class LinkErrorsApiController : UmbracoAuthorizedApiController
     {
         private readonly ILinkErrorsService _linkErrorsService;
+        private readonly ILinkErrorConfigurationProvider _configurationProvider;
 
-        public LinkErrorsApiController(ILinkErrorsService linkErrorsService)
+        public LinkErrorsApiController(ILinkErrorsService linkErrorsService, ILinkErrorConfigurationProvider configurationProvider)
         {
             _linkErrorsService = linkErrorsService;
+            _configurationProvider = configurationProvider;
         }
 
         [HttpGet]
@@ -38,7 +41,8 @@ namespace InboundLinkErrors.Core
                     Views = it.Views.ToDictionary(v => v.Date, v => v.VisitCount),
                     Referrers = it.Referrers.Select(r => r.Referrer).ToArray(),
                     UserAgents = it.UserAgents.Select(u => u.UserAgent).ToArray()
-                }).ToArray()
+                }).ToArray(),
+                AllowMedia = _configurationProvider.GetConfiguration().TrackMedia
             };
         }
 

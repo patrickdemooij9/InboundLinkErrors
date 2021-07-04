@@ -18,7 +18,6 @@ namespace InboundLinkErrors.Core.Mappers
                 {
                     target.Id = source.Id;
                     target.IsHidden = source.IsHidden;
-                    target.IsDeleted = source.IsDeleted;
                 });
 
             mapper.Define<LinkErrorDto, LinkErrorEntity>(
@@ -27,7 +26,6 @@ namespace InboundLinkErrors.Core.Mappers
                 {
                     target.Id = source.Id;
                     target.IsHidden = source.IsHidden;
-                    target.IsDeleted = source.IsDeleted;
                     target.Url = source.Url;
                 });
 

@@ -8,6 +8,9 @@ namespace InboundLinkErrors.Core.Models.ViewModels
         [JsonProperty("items")]
         public LinkErrorItemViewModel[] Items { get; set; }
 
+        [JsonProperty("allowMedia")]
+        public bool AllowMedia { get; set; }
+
         public LinkErrorViewModel()
         {
             Items = Array.Empty<LinkErrorItemViewModel>();

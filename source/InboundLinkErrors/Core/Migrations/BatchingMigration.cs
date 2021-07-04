@@ -39,6 +39,9 @@ namespace InboundLinkErrors.Core.Migrations
 
             if (ColumnExists("InboundLinkErrors", "LastTimeAccessed"))
                 Delete.Column("LastTimeAccessed").FromTable("InboundLinkErrors").Do();
+
+            if (ColumnExists("InboundLinkErrors", "IsDeleted"))
+                Delete.Column("IsDeleted").FromTable("InboundLinkErrors").Do();
         }
     }
 }

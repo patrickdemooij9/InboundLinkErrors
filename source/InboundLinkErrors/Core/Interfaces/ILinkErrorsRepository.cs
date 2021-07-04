@@ -11,6 +11,6 @@ namespace InboundLinkErrors.Core.Interfaces
         void Delete(LinkErrorDto model);
         LinkErrorDto Get(int id);
         IEnumerable<LinkErrorDto> GetByUrl(params string[] urls);
-        IEnumerable<LinkErrorDto> GetAll(bool includeDeleted = false);
+        IEnumerable<LinkErrorDto> GetAll();
     }
 }
