@@ -23,8 +23,8 @@
                             <h3 class="table-title p-20" style="display: inline-block"> {{tableParams.total()}} rows</h3>
                             <input type="checkbox" id="showHidden" ng-model="showHidden" ng-change="refreshTable()" />
                             <label for="showHidden">Show hidden</label>
-                            <input type="checkbox" id="showMedia" class="m-l-20" ng-model="showMedia" ng-change="refreshTable()" />
-                            <label for="showMedia">Show media</label>
+                            <input type="checkbox" id="showMedia" class="m-l-20" ng-model="showMedia" ng-change="refreshTable()" ng-if="data.allowMedia" />
+                            <label for="showMedia" ng-if="data.allowMedia">Show media</label>
                         </div>
                         <div class="col-md-6">
                             <div class="table-search">
@@ -50,20 +50,20 @@
                         <table ng-table="tableParams" template-header="header" template-pagination="pager" class="table table-full table-full-small">
                             <tbody>
                                 <tr ng-repeat="item in $data">
-                                    <td data-title="'Url'" sortable="'Url'">
-                                        <span>{{item.Url}}</span>
+                                    <td class="urlInfo" data-title="'Url'" sortable="'url'">
+                                        <a title="Details" ng-click="openDetailDialog(item)">{{item.url}}</a>
                                     </td>
-                                    <td data-title="'Times Accessed'" sortable="'TimesAccessed'">
-                                        <span>{{item.TimesAccessed}}</span>
+                                    <td data-title="'Times Accessed'" sortable="'totalVisits'">
+                                        <span>{{item.totalVisits}}</span>
                                     </td>
-                                    <td data-title="'Last Accessed'" sortable="'LastAccessedTime'">
-                                        <span>{{item.LastAccessedTime | date:'M/d/yy h:mm a'}}</span>
+                                    <td data-title="'Last Accessed'" sortable="'lastAccessed'">
+                                        <span>{{item.lastAccessed | date:'MM/dd/yy'}}</span>
                                     </td>
                                     <td data-title="'Actions'">
-                                        <button type="button" class="btn btn-primary" ng-if="!item.IsMedia" ng-click="openRedirectDialog(item)">Set Redirect</button>
+                                        <button type="button" class="btn btn-primary" ng-if="!item.isMedia" ng-click="openRedirectDialog(item)">Set Redirect</button>
                                         <button type="button" class="btn btn-danger" ng-click="deleteLinkError(item)">Delete</button>
-                                        <button type="button" class="btn btn-info" ng-if="!item.IsHidden" ng-click="toggleHideLinkError(item, true)">Hide</button>
-                                        <button type="button" class="btn btn-info" ng-if="item.IsHidden" ng-click="toggleHideLinkError(item, false)">Show</button>
+                                        <button type="button" class="btn btn-info" ng-if="!item.isHidden" ng-click="toggleHideLinkError(item, true)">Hide</button>
+                                        <button type="button" class="btn btn-info" ng-if="item.isHidden" ng-click="toggleHideLinkError(item, false)">Show</button>
                                     </td>
                                 </tr>
                             </tbody>
