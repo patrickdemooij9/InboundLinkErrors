@@ -23,8 +23,8 @@
                             <h3 class="table-title p-20" style="display: inline-block"> {{tableParams.total()}} rows</h3>
                             <input type="checkbox" id="showHidden" ng-model="showHidden" ng-change="refreshTable()" />
                             <label for="showHidden">Show hidden</label>
-                            <input type="checkbox" id="showMedia" class="m-l-20" ng-model="showMedia" ng-change="refreshTable()" ng-if="data.allowMedia" />
-                            <label for="showMedia" ng-if="data.allowMedia">Show media</label>
+                            <input type="checkbox" id="showMedia" class="m-l-20" ng-model="showMedia" ng-change="refreshTable()" ng-show="data.allowMedia" />
+                            <label for="showMedia" ng-show="data.allowMedia">Show media</label>
                         </div>
                         <div class="col-md-6">
                             <div class="table-search">
