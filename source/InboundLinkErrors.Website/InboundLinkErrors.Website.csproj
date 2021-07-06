@@ -396,6 +396,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Umbraco.sdf" />
     <Content Include="App_Plugins\LinkErrors\app.html" />
     <Content Include="App_Plugins\LinkErrors\assets\scripts\detail.controller.js" />
     <Content Include="App_Plugins\LinkErrors\assets\views\detail.html" />
