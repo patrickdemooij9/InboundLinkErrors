@@ -1,0 +1,64 @@
+﻿<div ng-controller="LinkErrors.DetailController as vm">
+    <umb-editor-view>
+        <umb-editor-header name="model.title"
+                           name-locked="true"
+                           hide-alias="true"
+                           hide-icon="true"
+                           hide-description="true"></umb-editor-header>
+        <umb-editor-container>
+            <umb-box>
+                <umb-box-content>
+                    <p class="detail-title"><b>Missing link:</b> {{model.linkError.url}}</p>
+                    <div class="umb-panel-group__details">
+                        <div class="umb-panel-group__details-group">
+                            <div class="umb-panel-group__details-group-title">
+                                <div class="umb-panel-group__details-group-name">
+                                    Referrers
+                                </div>
+                            </div>
+
+                            <div class="umb-panel-group__details-checks">
+                                <div class="umb-panel-group__details-check">
+                                    <div class="umb-panel-group__details-status" ng-repeat="referrer in model.linkError.referrers">
+                                        <div class="umb-panel-group__details-status-content">
+                                            {{referrer}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="umb-panel-group__details">
+                        <div class="umb-panel-group__details-group">
+                            <div class="umb-panel-group__details-group-title">
+                                <div class="umb-panel-group__details-group-name">
+                                    User Agents
+                                </div>
+                            </div>
+
+                            <div class="umb-panel-group__details-checks">
+                                <div class="umb-panel-group__details-check">
+                                    <div class="umb-panel-group__details-status" ng-repeat="userAgent in model.linkError.userAgents">
+                                        <div class="umb-panel-group__details-status-content">
+                                            {{userAgent}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </umb-box-content>
+            </umb-box>
+        </umb-editor-container>
+        <umb-editor-footer>
+            <umb-editor-footer-content-right>
+                <umb-button type="button"
+                            button-style="link"
+                            label-key="general_close"
+                            shortcut="esc"
+                            action="vm.close()">
+                </umb-button>
+            </umb-editor-footer-content-right>
+        </umb-editor-footer>
+    </umb-editor-view>
+</div>

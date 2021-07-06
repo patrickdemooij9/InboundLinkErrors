@@ -196,3 +196,7 @@ FakesAssemblies/
 *.opt
 
 *.nuspec
+
+TEMP/
+Logs/
+App_Data/

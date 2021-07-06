@@ -1,4 +1,5 @@
 using InboundLinkErrors.Core.Models;
+using InboundLinkErrors.Core.Models.Data;
 using Umbraco.Core.Migrations;
 
 namespace InboundLinkErrors.Core.Migrations
