@@ -14,6 +14,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="Core\LinkErrorsService.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
       <None Remove="App_Plugins\LinkErrors\app.html" />
       <None Remove="App_Plugins\LinkErrors\lang\en.xml" />
       <None Remove="App_Plugins\LinkErrors\assets\scripts\app.js" />
