@@ -147,7 +147,7 @@ angular.module("umbraco").controller("LinkErrorsController", function ($scope, $
             var searchTerm = params.filter().Search;
             var searchedData = searchTerm ?
                 data.filter(function (linkError) {
-                    return linkError.Url.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
+                    return linkError.url.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1;
                 }) : data;
 
             var filteredData = $scope.showHidden ? searchedData :
