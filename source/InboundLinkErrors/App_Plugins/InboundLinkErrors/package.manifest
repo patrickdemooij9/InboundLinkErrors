@@ -1,0 +1,12 @@
+{
+  "javascript": [
+    "~/App_Plugins/InboundLinkErrors/assets/scripts/app.js",
+    "~/App_Plugins/InboundLinkErrors/assets/scripts/vendors.min.js",
+    "~/App_Plugins/InboundLinkErrors/assets/scripts/createRedirect.controller.js",
+    "~/App_Plugins/InboundLinkErrors/assets/scripts/detail.controller.js"
+  ],
+  "css": [
+    "~/App_Plugins/InboundLinkErrors/assets/styles/styles.min.css",
+    "~/App_Plugins/InboundLinkErrors/assets/styles/vendors.min.css"
+  ]
+}

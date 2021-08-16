@@ -1,56 +1,28 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <OutputType>Library</OutputType>
-        <TargetFramework>net472</TargetFramework>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Authors>Patrick</Authors>
-        <Description>Umbraco dashboard for tracking and showing inbound link errors</Description>
-        <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-        <PackageProjectUrl>https://github.com/patrickdemooij9/InboundLinkErrors</PackageProjectUrl>
-        <Version>1.0.8</Version>
+        <TargetFramework>net5.0</TargetFramework>
+        <ContentTargetFolders>.</ContentTargetFolders>
         <Product>InboundLinkErrors</Product>
-        <PackageIconUrl>https://raw.githubusercontent.com/patrickdemooij9/InboundLinkErrors/master/package/InboundLinkErrorsLogo.png</PackageIconUrl>
+        <PackageId>InboundLinkErrors</PackageId>
+        <Title>InboundLinkErrors</Title>
+        <Description>...</Description>
+        <Product>...</Product>
+        <PackageTags>umbraco plugin package</PackageTags>
     </PropertyGroup>
 
     <ItemGroup>
-      <Compile Remove="Core\LinkErrorsService.cs" />
+        <PackageReference Include="Umbraco.Cms.Web.Website" Version="9.0.0-rc001"/>
+        <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="9.0.0-rc001"/>
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="App_Plugins\LinkErrors\app.html" />
-      <None Remove="App_Plugins\LinkErrors\assets\scripts\detail.controller.js" />
-      <None Remove="App_Plugins\LinkErrors\assets\views\detail.html" />
-      <None Remove="App_Plugins\LinkErrors\lang\en-US.xml" />
-      <None Remove="App_Plugins\LinkErrors\lang\en.xml" />
-      <None Remove="App_Plugins\LinkErrors\assets\scripts\app.js" />
-      <None Remove="App_Plugins\LinkErrors\assets\scripts\createRedirect.controller.js" />
-      <None Remove="App_Plugins\LinkErrors\assets\scripts\vendors.min.js" />
-      <None Remove="App_Plugins\LinkErrors\assets\styles\styles.min.css" />
-      <None Remove="App_Plugins\LinkErrors\assets\styles\vendors.min.css" />
-      <None Remove="App_Plugins\LinkErrors\assets\views\createRedirect.html" />
-      <None Remove="App_Plugins\LinkErrors\package.manifest" />
+        <Content Include="App_Plugins\InboundLinkErrors\**\*.*">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+        </Content>
+        <None Include="build\**\*.*">
+            <Pack>True</Pack>
+            <PackagePath>buildTransitive</PackagePath>
+        </None>
     </ItemGroup>
-
-    <ItemGroup>
-        <Content Include="App_Plugins\LinkErrors\app.html" />
-        <Content Include="App_Plugins\LinkErrors\assets\scripts\detail.controller.js" />
-        <Content Include="App_Plugins\LinkErrors\assets\views\detail.html" />
-        <Content Include="App_Plugins\LinkErrors\lang\en-US.xml" />
-        <Content Include="App_Plugins\LinkErrors\lang\en.xml" />
-        <Content Include="App_Plugins\LinkErrors\assets\scripts\app.js" />
-        <Content Include="App_Plugins\LinkErrors\assets\scripts\createRedirect.controller.js" />
-        <Content Include="App_Plugins\LinkErrors\assets\scripts\vendors.min.js" />
-        <Content Include="App_Plugins\LinkErrors\assets\styles\styles.min.css" />
-        <Content Include="App_Plugins\LinkErrors\assets\styles\vendors.min.css" />
-        <Content Include="App_Plugins\LinkErrors\assets\views\createRedirect.html" />
-        <Content Include="App_Plugins\LinkErrors\package.manifest" />
-        <Content Include="web.config.install.xdt" />
-        <Content Include="web.config.uninstall.xdt" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Include="UmbracoCms.Web" Version="8.1.0" />
-    </ItemGroup>
-
 </Project>
