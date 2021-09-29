@@ -2,11 +2,12 @@ using InboundLinkErrors.Core.Components;
 using InboundLinkErrors.Core.ConfigurationProvider;
 using InboundLinkErrors.Core.Interfaces;
 using InboundLinkErrors.Core.Mappers;
-using InboundLinkErrors.Core.MiddleWare;
+using InboundLinkErrors.Core.Middleware;
 using InboundLinkErrors.Core.Options;
 using InboundLinkErrors.Core.Processor;
 using InboundLinkErrors.Core.Repositories;
 using InboundLinkErrors.Core.Services;
+using InboundLinkErrors.Core.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Umbraco.Cms.Core;
@@ -37,8 +38,12 @@ namespace InboundLinkErrors.Core
             composition.Services.AddUnique<IRedirectAdapter, UmbracoRedirectAdapter>();
             composition.Services.AddUnique<ILinkErrorConfigurationProvider, LinkErrorConfigurationProvider>();
 
+            composition.Services.AddHostedService<LinkErrorsCleanupTask>();
+            composition.Services.AddHostedService<LinkErrorsDatabaseSyncTask>();
+
             composition.Services.Configure<LinkErrorsOptions>(composition.Config.GetSection(
                 LinkErrorsOptions.Position));
+
             composition.Services.Configure<UmbracoPipelineOptions>(options => {
                 options.AddFilter(new UmbracoPipelineFilter(
                     "InboundLinkErrors",

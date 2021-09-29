@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InboundLinkErrors", "Inboun
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InboundLinkErrors.Core", "InboundLinkErrors.Core\InboundLinkErrors.Core.csproj", "{D3A4EEA3-AC37-4B30-851A-4933BC59FA6C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InboundLinkErrors.Website", "InboundLinkErrors.Website\InboundLinkErrors.Website.csproj", "{893DB2FC-DF9D-4FD5-AC3E-D5BCC90FC3C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InboundLinkErrors.Website", "InboundLinkErrors.Website\InboundLinkErrors.Website.csproj", "{E9E003FF-3710-4F6C-9C16-F3418B9B03CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{D3A4EEA3-AC37-4B30-851A-4933BC59FA6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3A4EEA3-AC37-4B30-851A-4933BC59FA6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3A4EEA3-AC37-4B30-851A-4933BC59FA6C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{893DB2FC-DF9D-4FD5-AC3E-D5BCC90FC3C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{893DB2FC-DF9D-4FD5-AC3E-D5BCC90FC3C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{893DB2FC-DF9D-4FD5-AC3E-D5BCC90FC3C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{893DB2FC-DF9D-4FD5-AC3E-D5BCC90FC3C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9E003FF-3710-4F6C-9C16-F3418B9B03CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9E003FF-3710-4F6C-9C16-F3418B9B03CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9E003FF-3710-4F6C-9C16-F3418B9B03CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9E003FF-3710-4F6C-9C16-F3418B9B03CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

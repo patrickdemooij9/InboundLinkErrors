@@ -1,0 +1,27 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <PropertyGroup>
+        <InboundLinkErrorsContentFilesPath>$(MSBuildThisFileDirectory)..\App_Plugins\InboundLinkErrors\**\*.*</InboundLinkErrorsContentFilesPath>
+    </PropertyGroup>
+
+    <Target Name="CopyInboundLinkErrorsAssets" BeforeTargets="Build">
+        <ItemGroup>
+            <InboundLinkErrorsContentFiles Include="$(InboundLinkErrorsContentFilesPath)" />
+        </ItemGroup>
+        <Message Text="Copying InboundLinkErrors files: $(InboundLinkErrorsContentFilesPath) - #@(InboundLinkErrorsContentFiles->Count()) files"  Importance="high" />
+        <Copy
+            SourceFiles="@(InboundLinkErrorsContentFiles)"
+            DestinationFiles="@(InboundLinkErrorsContentFiles->'$(MSBuildProjectDirectory)\App_Plugins\InboundLinkErrors\%(RecursiveDir)%(Filename)%(Extension)')"
+            SkipUnchangedFiles="true" />
+
+    </Target>
+
+    <Target Name="ClearInboundLinkErrorsAssets" BeforeTargets="Clean">
+        <ItemGroup>
+            <InboundLinkErrorsDir Include="$(MSBuildProjectDirectory)\App_Plugins\InboundLinkErrors\" />
+        </ItemGroup>
+        <Message Text="Clear old InboundLinkErrors data"  Importance="high" />
+        <RemoveDir Directories="@(InboundLinkErrorsDir)"  />
+    </Target>
+
+</Project>

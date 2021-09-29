@@ -11,8 +11,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Umbraco.Cms.Web.Website" Version="9.0.0-rc001"/>
-        <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="9.0.0-rc001"/>
+        <PackageReference Include="Umbraco.Cms.Web.Website" Version="9.0.0" />
+        <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="9.0.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -24,5 +24,9 @@
             <Pack>True</Pack>
             <PackagePath>buildTransitive</PackagePath>
         </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\InboundLinkErrors.Core\InboundLinkErrors.Core.csproj" />
     </ItemGroup>
 </Project>

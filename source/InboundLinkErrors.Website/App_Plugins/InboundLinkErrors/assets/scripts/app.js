@@ -39,7 +39,7 @@ angular.module("umbraco").controller("LinkErrorsController", function ($scope, $
     $scope.openRedirectDialog = function (linkError) {
         var redirectDialogOptions = {
             title: "Set redirect",
-            view: "/App_Plugins/LinkErrors/assets/views/createRedirect.html",
+            view: "/App_Plugins/InboundLinkErrors/assets/views/createRedirect.html",
             size: "small",
             submit: function (model) {
                 var selectedNodeId = model.selectedNode.id;
@@ -58,7 +58,7 @@ angular.module("umbraco").controller("LinkErrorsController", function ($scope, $
     $scope.openDetailDialog = function (linkError) {
         var detailDialogOptions = {
             title: "Details",
-            view: "/App_Plugins/LinkErrors/assets/views/detail.html",
+            view: "/App_Plugins/InboundLinkErrors/assets/views/detail.html",
             size: "small",
             linkError: linkError,
             close: function () {
@@ -203,7 +203,7 @@ angular.module("umbraco.resources").factory("LinkErrorsApi", function ($http) {
         },
         //Remove / Delete an existing redirect
         remove: function (id) {
-            return $http.delete("backoffice/LinkErrors/LinkErrorsApi/Delete/" + id);
+            return $http.delete("backoffice/LinkErrors/LinkErrorsApi/Delete/?id=" + id);
         },
         setRedirect: function (linkErrorId, nodeId, culture) {
             return $http.post("backoffice/LinkErrors/LinkErrorsApi/SetRedirect?linkErrorId=" + linkErrorId + "&nodeId=" + nodeId + "&culture=" + culture);

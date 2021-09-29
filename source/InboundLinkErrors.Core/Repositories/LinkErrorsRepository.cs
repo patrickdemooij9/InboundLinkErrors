@@ -14,9 +14,9 @@ namespace InboundLinkErrors.Core.Repositories
     public class LinkErrorsRepository : ILinkErrorsRepository
     {
         private readonly IScopeProvider _scopeProvider;
-        private readonly UmbracoMapper _umbracoMapper;
+        private readonly IUmbracoMapper _umbracoMapper;
 
-        public LinkErrorsRepository(IScopeProvider scopeProvider, UmbracoMapper umbracoMapper)
+        public LinkErrorsRepository(IScopeProvider scopeProvider, IUmbracoMapper umbracoMapper)
         {
             _scopeProvider = scopeProvider;
             _umbracoMapper = umbracoMapper;
