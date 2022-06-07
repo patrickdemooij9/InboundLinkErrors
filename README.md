@@ -1,7 +1,5 @@
 # InboundLinkErrors
 
-[![Build status](https://ci.appveyor.com/api/projects/status/u3267xahfofk77y5?svg=true)](https://ci.appveyor.com/project/patrickdemooij9/inboundlinkerrors)
-
 Inbound link errors is a simple Umbraco Back-Office package that tracks 404 responses so that you can add a redirect to them. It includes a dashboard in Umbraco where the user is able to add it as a new redirect, delete it or hide it. 
 Utilizes [ngTable](https://github.com/esvit/ng-table) for an AngularJs driven data table which includes ordering by column, simple pagination and searching.
 Links are only tracked at the end of the pipeline and if the request resulted in a 404 response.
