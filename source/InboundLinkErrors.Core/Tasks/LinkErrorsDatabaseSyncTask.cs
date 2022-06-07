@@ -12,7 +12,7 @@ namespace InboundLinkErrors.Core.Tasks
         private readonly ILinkErrorsProcessor _processor;
         private readonly ILogger<LinkErrorsDatabaseSyncTask> _logger;
 
-        public LinkErrorsDatabaseSyncTask(ILinkErrorConfigurationProvider configurationProvider, ILinkErrorsProcessor processor, ILogger<LinkErrorsDatabaseSyncTask> logger) : base(configurationProvider.GetConfiguration().SyncStartTime, configurationProvider.GetConfiguration().SyncInterval)
+        public LinkErrorsDatabaseSyncTask(ILinkErrorConfigurationProvider configurationProvider, ILinkErrorsProcessor processor, ILogger<LinkErrorsDatabaseSyncTask> logger) : base(logger, configurationProvider.GetConfiguration().SyncStartTime, configurationProvider.GetConfiguration().SyncInterval)
         {
             _processor = processor;
             _logger = logger;

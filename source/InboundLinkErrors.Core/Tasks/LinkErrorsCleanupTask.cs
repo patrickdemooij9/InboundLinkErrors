@@ -14,7 +14,7 @@ namespace InboundLinkErrors.Core.Tasks
         private readonly ILogger<LinkErrorsCleanupTask> _logger;
         private readonly ILinkErrorsService _linkErrorsService;
 
-        public LinkErrorsCleanupTask(ILinkErrorConfigurationProvider configurationProvider, ILogger<LinkErrorsCleanupTask> logger, ILinkErrorsService linkErrorsService) : base(configurationProvider.GetConfiguration().CleanupStartTime, configurationProvider.GetConfiguration().CleanupInterval)
+        public LinkErrorsCleanupTask(ILinkErrorConfigurationProvider configurationProvider, ILogger<LinkErrorsCleanupTask> logger, ILinkErrorsService linkErrorsService) : base(logger, configurationProvider.GetConfiguration().CleanupStartTime, configurationProvider.GetConfiguration().CleanupInterval)
         {
             _logger = logger;
             _linkErrorsService = linkErrorsService;

@@ -10,7 +10,6 @@ using InboundLinkErrors.Core.Services;
 using InboundLinkErrors.Core.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using Umbraco.Cms.Core;
 using Umbraco.Cms.Core.Composing;
 using Umbraco.Cms.Core.DependencyInjection;
 using Umbraco.Cms.Core.Mapping;
@@ -19,7 +18,7 @@ using Umbraco.Extensions;
 
 namespace InboundLinkErrors.Core
 {
-    public class LinkErrorsUserComposer : IUserComposer
+    public class LinkErrorsUserComposer : IComposer
     {
         public void Compose(IUmbracoBuilder composition)
         {

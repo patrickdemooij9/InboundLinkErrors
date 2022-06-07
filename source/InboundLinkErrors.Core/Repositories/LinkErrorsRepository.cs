@@ -5,8 +5,8 @@ using InboundLinkErrors.Core.Models.Data;
 using InboundLinkErrors.Core.Models.Dto;
 using NPoco;
 using Umbraco.Cms.Core.Mapping;
-using Umbraco.Cms.Core.Scoping;
 using Umbraco.Cms.Infrastructure.Persistence;
+using Umbraco.Cms.Infrastructure.Scoping;
 using Umbraco.Extensions;
 
 namespace InboundLinkErrors.Core.Repositories
